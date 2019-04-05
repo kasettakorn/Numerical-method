@@ -22,16 +22,26 @@ import NewtonInterpolate from './Interpolation/Newton';
 import Lagrange from './Interpolation/Lagrange';
 import Spline from './Interpolation/Spline';
 import LeastSquare from './Regression/LeastSquare';
+import CompositeTrapezoidal from './Integration/CompositeTrapzoidal';
+import CompositeSimpson from './Integration/CompositeSimpson';
+import ForwardH from './Differentiation/Forwardh';
+import ForwardH2 from './Differentiation/ForwardH2';
+import BackwardH from './Differentiation/Backwardh';
+import BackwardH2 from './Differentiation/Backwardh2';
+import CentralH from './Differentiation/Centralh';
+import CentralH2 from './Differentiation/Centralh2';
+import Euler from './ODE/Euler';
+import Heun from './ODE/Heun';
+import ModifiedEuler from './ODE/Modified_Euler';
 import {Layout, Menu, Icon } from 'antd';
 import StarCanvas from './StarfieldCanvas';
 const { SubMenu } = Menu;
 const { Header, Content, Sider, Footer } = Layout; 
-
 class Index extends React.Component {
-  rootSubmenuKeys = ['root_submenu', 'algebra_submenu', 'interpolate_submenu', 'regression_submenu'];
+  rootSubmenuKeys = ['root_submenu', 'algebra_submenu', 'interpolate_submenu', 'regression_submenu', 'integrate_submenu', 'diff_submenu', 'de_submenu'];
 
   state = {
-    openKeys: ['root_submenu'],
+    openKeys: [''],
   };
 
   onOpenChange = (openKeys) => {
@@ -92,7 +102,7 @@ class Index extends React.Component {
     else if (props.key.localeCompare("menu_gradient") === 0)  {
       ReactDOM.render(<Gradient />, document.getElementById("content"));
     }
-    //-------------Interpolation onClick()---------------------------
+    //--------------------Interpolation onClick()---------------------------
     else if (props.key.localeCompare("menu_divide") === 0)  {
       ReactDOM.render(<NewtonInterpolate />, document.getElementById("content"));
     }
@@ -102,10 +112,47 @@ class Index extends React.Component {
     else if (props.key.localeCompare("menu_spline") === 0)  {
       ReactDOM.render(<Spline />, document.getElementById("content"));
     }
+    //--------------------Least Square onClick()---------------------------
     else if (props.key.localeCompare("menu_lse") === 0) {
       ReactDOM.render(<LeastSquare />, document.getElementById("content"));
     }
+    //--------------------Integration onClick()---------------------------
+    else if (props.key.localeCompare("menu_compositeTrapzoidal") === 0) {
+      ReactDOM.render(<CompositeTrapezoidal />, document.getElementById("content"));
+    }
+    else if (props.key.localeCompare("menu_compositeSimpson") === 0) {
+      ReactDOM.render(<CompositeSimpson />, document.getElementById("content"));
+    }
 
+    //--------------------Differentiation onClick()---------------------------
+    else if (props.key.localeCompare("menu_forwardh") === 0) {
+      ReactDOM.render(<ForwardH />, document.getElementById("content"));
+    }
+    else if (props.key.localeCompare("menu_backwardh") === 0) {
+      ReactDOM.render(<BackwardH />, document.getElementById("content"))
+    }
+    else if (props.key.localeCompare("menu_centralh") === 0) {
+      ReactDOM.render(<CentralH />, document.getElementById("content"));
+    }
+    else if (props.key.localeCompare("menu_forward2h") === 0) {
+      ReactDOM.render(<ForwardH2 />, document.getElementById("content"));
+    }
+    else if (props.key.localeCompare("menu_backward2h") === 0) {
+      ReactDOM.render(<BackwardH2 />, document.getElementById("content"))
+    }
+    else if (props.key.localeCompare("menu_central2h") === 0) {
+      ReactDOM.render(<CentralH2 />, document.getElementById("content"));
+    }
+    //--------------------ODE onClick()---------------------------
+    else if (props.key.localeCompare("menu_euler") === 0) {
+      ReactDOM.render(<Euler />, document.getElementById("content"));
+    }
+    else if (props.key.localeCompare("menu_heun") === 0) {
+      ReactDOM.render(<Heun />, document.getElementById("content"))
+    }
+    else if (props.key.localeCompare("menu_modifier") === 0) {
+      ReactDOM.render(<ModifiedEuler />, document.getElementById("content"));
+    }
 }
 
 
@@ -124,7 +171,7 @@ class Index extends React.Component {
         
         <Layout>
           <StarCanvas/>
-          <Sider width={256} style={{ background: "#fff" }}>
+          <Sider width={335} style={{ background: "#fff" }}>
             <Menu
               mode="inline"
               style={{ height: '80vh', borderRight: 0, backgroundColor: "#001529", overflowY: "scroll" }}
@@ -155,11 +202,30 @@ class Index extends React.Component {
               <SubMenu key="interpolate_submenu" title={<span><Icon type="notification" />Interpolation</span>}>
                 <Menu.Item key="menu_divide">Newton Divide Difference</Menu.Item>
                 <Menu.Item key="menu_lagrange">Lagrange</Menu.Item>
-                <Menu.Item key="menu_spline">Spline (Cubic)</Menu.Item>
+                <Menu.Item key="menu_spline">Spline</Menu.Item>
               </SubMenu>
-              <SubMenu key="regression_submenu" title={<span><Icon type="calculator" />Regression</span>}>
-                <Menu.Item key="menu_lse">Least Square Error</Menu.Item>
+              <SubMenu key="regression_submenu" title={<span><Icon type="calculator" />Least Square Error</span>}>
+                <Menu.Item key="menu_linear">Linear Regression</Menu.Item>
+                <Menu.Item key="menu_poly">Polynomial Regression</Menu.Item>
+                <Menu.Item key="menu_multiple">Multiple Linear Regression</Menu.Item>
               </SubMenu>
+              <SubMenu key="integrate_submenu" title={<span><Icon type="calculator" />Integration</span>}>
+                <Menu.Item key="menu_compositeTrapzoidal">Composite Trapezoidal Rule</Menu.Item>
+                <Menu.Item key="menu_compositeSimpson">Composite Simpson's Rule</Menu.Item>
+              </SubMenu>
+              <SubMenu key="diff_submenu" title={<span><Icon type="notification" />Differentiation</span>}>
+                <Menu.Item key="menu_forwardh">Forward Divided-Differences O(h)</Menu.Item>
+                <Menu.Item key="menu_backwardh">Backward Divided-Differences O(h)</Menu.Item>
+                <Menu.Item key="menu_centralh">Central Divided-Differences O(h{<sup>2</sup>})</Menu.Item>
+                <Menu.Item key="menu_forward2h">Forward Divided-Differences O(h{<sup>2</sup>})</Menu.Item>
+                <Menu.Item key="menu_backward2h">Backward Divided-Differences O(h{<sup>2</sup>})</Menu.Item>
+                <Menu.Item key="menu_central2h">Central Divided-Differences O(h{<sup>4</sup>})</Menu.Item>
+              </SubMenu>
+              <SubMenu key="de_submenu" title={<span><Icon type="laptop" />Ordinary Differential Equation</span>}>
+                <Menu.Item key="menu_euler">Euler's Method</Menu.Item>
+                <Menu.Item key="menu_heun">Heun's Method</Menu.Item>
+                <Menu.Item key="menu_modifier">Modifier Euler's Method</Menu.Item>
+              </SubMenu>              
             </Menu>
           </Sider>
           <Layout style={{ padding: '0 24px 24px' }}>

@@ -12,7 +12,7 @@ const InputStyle = {
 };
 
 
-var A = [], B = [], matrixA = [], matrixB = [], matrixX = [],  x , epsilon, dataInTable = [], count=1
+var A = [], B = [], matrixA = [], matrixB = [], matrixX = [],  x , epsilon, dataInTable = [], count=1, output
 var columns = [
     {
       title: "Iteration",
@@ -51,10 +51,32 @@ class Gradient extends Component {
         this.conjugate_gradient = this.conjugate_gradient.bind(this);
     
     }
-
+    positive_definite(dimention) {
+        var tempMatrix = []
+        for (var i=0 ; i<dimention ; i++) {
+            tempMatrix[i] = []
+            for (var j=0 ; j<dimention ; j++) {
+                tempMatrix[i][j] = A[i][j];
+            }
+        }
+        if (math.det(tempMatrix) <= 0) {
+            return false;
+        }
+        if (dimention !== this.state.row-1) {
+            return this.positive_definite(++dimention);
+        }
+        return true;
+    }
   
     conjugate_gradient() {
         this.initMatrix();
+        if (!this.positive_definite(1)) {
+            output = "This matrix doesn't positive definite"
+            this.setState({
+                showOutputCard: true
+            });
+            return false;
+        }
         //find {R0}
         var R = math.subtract(math.multiply(A,x), B);
         console.log(R)
@@ -176,13 +198,13 @@ class Gradient extends Component {
     }
     render() {
         return(
-            <div style={{ background: "#FFFF", padding: "30px" }}>
+            <div style={{ background: "#FFFF", padding: "30px", float:"left"}}>
                 <h2 style={{color: "black", fontWeight: "bold"}}>Conjugate Gradient Iteration Method</h2>
                 <div>
                     <Card
-                      bordered={true}
-                      style={{ width: 400, background: "#f44336", color: "#FFFFFFFF", overflowX:"scroll"}}
-                      onChange={this.handleChange}
+                    bordered={true}
+                    style={{ width: 400, background: "#f44336", color: "#FFFFFFFF", float:"left"}}
+                    onChange={this.handleChange}
                     >
                         {this.state.showMatrixForm && <div><h2>Matrix [A]</h2><br/>{matrixA}<h2>Vector [B]<br/></h2>{matrixB}<h2>Initial X<br/></h2>{matrixX}</div>}
                         
@@ -214,15 +236,26 @@ class Gradient extends Component {
                     
 
                     {this.state.showOutputCard && 
-                        <Card
-                        title={"Output"}
-                        bordered={true}
-                        style={{width: "100%", background: "#2196f3", color: "#FFFFFFFF", float:"inline-start", marginBlockStart:"2%"}}
-                        id="outputCard"
-                        >
-                            <Table columns={columns} dataSource={dataInTable} bordered={true} bodyStyle={{fontWeight: "bold", fontSize: "18px", color: "black", overflowX: "scroll"}}
-                            ></Table>
-                        </Card>
+                        <div>     
+                            <Card
+                            title={"Output"}
+                            bordered={true}
+                            style={{ width: 400, background: "#3d683d", color: "#FFFFFFFF", float:"left", marginLeft:"2%", position:"fixed"}}
+                            onChange={this.handleChange}  id="answerCard">
+                                <p style={{fontSize: "24px", fontWeight: "bold"}}>{output}</p>
+                            </Card>    
+                            <Card
+                            title={"Output"}
+                            bordered={true}
+                            style={{width: "100%", background: "#2196f3", color: "#FFFFFFFF", float:"left", marginBlockStart:"2%"}}
+                            id="outputCard"
+                            >
+                                <Table columns={columns} dataSource={dataInTable} bordered={true} bodyStyle={{fontWeight: "bold", fontSize: "18px", color: "black", overflowX: "scroll"}}
+                                ></Table>
+                            </Card>
+                        
+                        </div>
+
                     }   
 
                    

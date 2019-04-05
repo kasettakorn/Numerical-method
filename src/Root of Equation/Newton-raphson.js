@@ -29,7 +29,7 @@ const columns = [
       key: "error",
       dataIndex: "error"
     }
-  ];
+];
   const xValues = math.range(-10, 10, 0.5).toArray();
   var fx = " ";
 class Newton extends Component {

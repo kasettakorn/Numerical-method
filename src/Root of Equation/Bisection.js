@@ -4,7 +4,6 @@ import '../screen.scss';
 import 'antd/dist/antd.css';
 import math from 'mathjs';
 import Plot from 'react-plotly.js';
-
 const InputStyle = {
     background: "#f58216",
     color: "white", 
@@ -51,7 +50,8 @@ class Bisection extends Component {
             xl: 0,
             xr: 0,
             showOutputCard: false,
-            showGraph: false
+            showGraph: false,
+            moveLeft: false
         }
         this.handleChange = this.handleChange.bind(this);
         this.bisection = this.bisection.bind(this);
@@ -60,7 +60,7 @@ class Bisection extends Component {
         fx = this.state.fx;
         var increaseFunction = false;
         var xm = 0;
-        var sum= parseFloat(0.000000)  ;
+        var sum= parseFloat(0.000000);
         var n=0;
         var data  = []
         data['xl'] = []
@@ -131,6 +131,7 @@ class Bisection extends Component {
         this.setState({
             [event.target.name]: event.target.value
         });
+
     }
     render() {
         return(
@@ -142,6 +143,7 @@ class Bisection extends Component {
                     bordered={true}
                     style={{ width: 300, background: "#f44336", color: "#FFFFFFFF", float:"left"}}
                     onChange={this.handleChange}
+                    id="inputCard"
                     >
                         <h2>f(x)</h2><Input size="large" name="fx" style={InputStyle}></Input>
                         <h2>X<sub>L</sub></h2><Input size="large" name="xl" style={InputStyle}></Input>

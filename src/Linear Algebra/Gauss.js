@@ -52,6 +52,8 @@ class Gauss extends Component {
 
             }
         }
+        alert(A)
+        alert(B)
         //Backward Substitution
         X = new Array(n);
         X[n-1] = B[n-1] / A[n-1][n-1]; //find Xn
@@ -60,7 +62,7 @@ class Gauss extends Component {
             for (j=i+1 ; j<n ; j++) {
                 sum = sum - A[i][j]*X[j];
             }
-            X[i] = sum / A[i][i];
+            X[i] = Math.round(sum / A[i][i]);
         }    
         for (i=0 ; i<n ; i++) {
             output.push("x"+(i+1)+" = "+X[i]);
@@ -75,6 +77,12 @@ class Gauss extends Component {
       
     }
     createMatrix(row, column) {
+        A = []
+        B = []
+        X = [] 
+        matrixA = []
+        matrixB = []
+        output = []
         for (var i=1 ; i<=row ; i++) {
             for (var j=1 ; j<=column ; j++) {
                 matrixA.push(<Input style={{
@@ -118,7 +126,7 @@ class Gauss extends Component {
         for(var i=0 ; i<this.state.row ; i++) {
             A[i] = []
             for(var j=0 ; j<this.state.column ; j++) {
-                A[i][j] = (parseInt(document.getElementById("a"+(i+1)+""+(j+1)).value));
+                A[i][j] = (parseFloat(document.getElementById("a"+(i+1)+""+(j+1)).value));
             }
             B.push(parseFloat(document.getElementById("b"+(i+1)).value));
         }

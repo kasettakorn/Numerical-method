@@ -109,7 +109,7 @@ class Newton extends Component {
         x = []
         y = []
         for (var i=1 ; i<=this.state.nPoints ; i++) {
-            x[i] = parseInt(document.getElementById("x"+i).value);
+            x[i] = parseFloat(document.getElementById("x"+i).value);
             y[i] = parseFloat(document.getElementById("y"+i).value);
         }
         for (i=1 ; i<=this.state.interpolatePoint ; i++) {

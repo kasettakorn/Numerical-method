@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import {Card, Input, Button, Table} from 'antd';
+import {Card, Input, Button} from 'antd';
 import '../screen.scss';
 import 'antd/dist/antd.css';
+import math from 'mathjs';
 const InputStyle = {
     background: "#f58216",
     color: "white", 
@@ -11,15 +12,8 @@ const InputStyle = {
 };
 
 
-var A = [], B = [], matrixA = [], matrixB = [], x , epsilon, dataInTable = [], count=1
-var columns = [
-    {
-      title: "Iteration",
-      dataIndex: "iteration",
-      key: "iteration"
-    }
-];
-class Jacobi extends Component {
+var A = [], B = [], matrixA = [], matrixB = [], output = [], decompose;
+class LU extends Component {
     
     constructor() {
         super();
@@ -33,58 +27,28 @@ class Jacobi extends Component {
             showOutputCard: false
         }
         this.handleChange = this.handleChange.bind(this);
-        this.jacobi = this.jacobi.bind(this);
+        this.Lu = this.Lu.bind(this);
     
     }
 
-  
-    jacobi(n) {
+    Lu(n) {
         this.initMatrix();
-        x = new Array(n);
-        var temp;
-        var xold = new Array(n);
-        epsilon = new Array(n);
-        x.fill(0)
-        xold.fill(0);
-        do {
-            temp = [];
-            xold = x;
-            for (var i=0 ; i<n ; i++) {
-                var sum = 0;
-                for (var j=0 ; j<n ; j++) {
-                    if (i !== j) { //else i == j That is a divide number
-                        sum = sum + A[i][j]*x[j];
-                    }
-                }
-                temp[i] = (B[i] - sum)/A[i][i]; //update x[i]
-                
-            }        
-            x = temp;
-        } while(this.error(x, xold)); //if true , continue next iteration
-        /*
-        
-        for (i=0 ; i<x.length ; i++) {
-                output.push(x[i]);
-                output.push(<br/>);
-        }*/
+        decompose = math.lusolve(A, B)
+        for (var i=0 ; i<decompose.length ; i++) {
+            output.push(Math.round(decompose[i]));
+            output.push(<br/>)
+        }
         this.setState({
             showOutputCard: true
         });
 
       
     }
-    error(xnew, xold) {
-        for (var i=0 ; i<xnew.length ; i++) {
-            epsilon[i] = Math.abs((xnew[i]-xold[i]) / xnew[i])
-        }
-        this.appendTable(x, epsilon);
-        for (i=0 ; i<epsilon.length ; i++) {
-            if (epsilon[i] > 0.000001) {
-                return true;
-            }    
-        }
-        return false;  
-    }   
+    
+    printFraction (value) {
+        return math.format(value, { fraction: 'ratio' })
+    }
+
     createMatrix(row, column) {
         for (var i=1 ; i<=row ; i++) {
             for (var j=1 ; j<=column ; j++) {
@@ -122,7 +86,6 @@ class Jacobi extends Component {
             showMatrixForm: true,
             showMatrixButton: true
         })
-
         
 
     }
@@ -135,34 +98,6 @@ class Jacobi extends Component {
             B.push(parseFloat(document.getElementById("b"+(i+1)).value));
         }
     }
-    initialSchema(n) {
-        for (var i=1 ; i<=n ; i++) {
-            columns.push({
-                title: "X"+i,
-                dataIndex: "x"+i,
-                key: "x"+i
-            },)
-        }
-        for (i=1 ; i<=n ; i++) {
-            columns.push({
-                title: "Error"+i,
-                dataIndex: "error"+i,
-                key: "error"+i
-            },)
-        }
-    }
-    appendTable(x, error) {
-        var tag = ''
-        tag += '{"iteration": ' + count++ + ',';
-        for (var i=0 ; i<x.length ; i++) {
-            tag += '"x'+(i+1)+'": '+x[i].toFixed(8)+', "error'+(i+1)+'": ' + error[i].toFixed(8);
-            if (i !== x.length-1) {
-                tag += ','
-            }
-        }
-        tag += '}';
-        dataInTable.push(JSON.parse(tag));  
-    }
 
     handleChange(event) {
         this.setState({
@@ -172,10 +107,9 @@ class Jacobi extends Component {
     render() {
         return(
             <div style={{ background: "#FFFF", padding: "30px" }}>
-                <h2 style={{color: "black", fontWeight: "bold"}}>Jacobi Iteration Method</h2>
+                <h2 style={{color: "black", fontWeight: "bold"}}>Cholesky Decomposition</h2>
                 <div>
                     <Card
-                      title={"Input Matrix Inverse"}
                       bordered={true}
                       style={{ width: 400, background: "#f44336", color: "#FFFFFFFF"}}
                       onChange={this.handleChange}
@@ -191,8 +125,7 @@ class Jacobi extends Component {
                         <br></br>
                         {this.state.showDimentionButton && 
                             <Button id="dimention_button" onClick= {
-                                ()=>{this.createMatrix(this.state.row, this.state.column);
-                                     this.initialSchema(this.state.row)}
+                                ()=>this.createMatrix(this.state.row, this.state.column)
                                 }  
                                 style={{background: "#4caf50", color: "white", fontSize: "20px"}}>
                                 Submit<br></br>
@@ -202,25 +135,22 @@ class Jacobi extends Component {
                             <Button 
                                 id="matrix_button"  
                                 style={{background: "blue", color: "white", fontSize: "20px"}}
-                                onClick={()=>this.jacobi(parseInt(this.state.row))}>
+                                onClick={()=>this.Lu(this.state.row)}>
                                 Submit
                             </Button>
                         }
                         
                     </Card>
                     
-
-                    {this.state.showOutputCard && 
+                    {this.state.showOutputCard &&
                         <Card
                         title={"Output"}
                         bordered={true}
-                        style={{width: "100%", background: "#2196f3", color: "#FFFFFFFF", float:"inline-start", marginBlockStart:"2%"}}
-                        id="outputCard"
-                        >
-                            <Table columns={columns} bordered dataSource={dataInTable} bodyStyle={{fontWeight: "bold", fontSize: "18px", color: "black", overflowX: "scroll", border:"2px solid white"}}
-                            ></Table>
+                        style={{ width: 400, background: "#3d683d", color: "#FFFFFFFF", float:"left"}}
+                        onChange={this.handleChange}  id="answerCard">
+                            <p style={{fontSize: "24px", fontWeight: "bold"}}>{output}</p>
                         </Card>
-                    }   
+                    }
 
                    
                 </div>
@@ -230,7 +160,7 @@ class Jacobi extends Component {
         );
     }
 }
-export default Jacobi;
+export default LU;
 
 
 

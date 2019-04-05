@@ -139,7 +139,7 @@ class FalsePosition extends Component {
         return(
             <div style={{ background: "#FFFF", padding: "30px" }}>
                 <h2 style={{color: "black", fontWeight: "bold"}}>False Position</h2>
-                <div>
+             
                     <Card
                     title={"Input False Postion"}
                     bordered={true}
@@ -189,7 +189,7 @@ class FalsePosition extends Component {
                             ></Table>
                         </Card>
                     }                    
-                </div>
+            
 
                 
             </div>

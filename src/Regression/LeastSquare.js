@@ -11,12 +11,22 @@ const InputStyle = {
 };
 var columns = [
     {
-      title: "No.",
-      dataIndex: "no",
-      key: "no"
+        title: "No.",
+        dataIndex: "no",
+        key: "no"
+    },
+    {
+        title: "X",
+        dataIndex: "x",
+        key: "x"
+    },
+    {
+        title: "Y",
+        dataIndex: "y",
+        key: "y"
     }
 ];
-var x, y, tableTag,  interpolatePoint, tempTag, fx
+var x, y, tableTag, fx
 
 class LSE extends Component {
     
@@ -24,8 +34,7 @@ class LSE extends Component {
         super();
         x = []
         y = []
-        interpolatePoint = []
-        tempTag = []
+
         tableTag = []
         this.state = {
             nPoints: 0,
@@ -38,26 +47,12 @@ class LSE extends Component {
             showOutputCard: false
         }
         this.handleChange = this.handleChange.bind(this);
-        this.lagrange = this.lagrange.bind(this);
+      
     
     }  
-    initialSchema(n) {
-        for (var i=1 ; i<=n ; i++) {
-            columns.push({
-                title: "X"+i,
-                dataIndex: "x"+i,
-                key: "x"+i
-            },)
-        }
-        columns.push({
-            title: "Y",
-            dataIndex: "y",
-            key: "y"
-        })
-    }
-    createTableInput(n) {
-        for (var i=1 ; i<=n ; i++) {
-            
+    createTableInput(n, X) {
+       /* for (var i=1 ; i<=n ; i++) {
+
             x.push(<Input style={{
                 width: "100%",
                 height: "50%", 
@@ -80,35 +75,25 @@ class LSE extends Component {
                 fontWeight: "bold"
             }} 
             id={"y"+i} key={"y"+i} placeholder={"y"+i}/>);   
-            tableTag.push({
-                no: i,
-                x: x[i-1],
-                y: y[i-1]
-            });
+            
+    }*/
+        for (var i=1 ; i<=n ; i++) {
+            for (var j=1 ; j<=X ; j++) {
+                
+            }
         }
 
-
+        tableTag.push({
+                no: i,
+                x: x,
+                y: y[0]
+            });
         this.setState({
             showInputForm: false,
             showInputButton: false,
             showTableInput: true,
             showTableButton: true
         })
-    }
-    createInterpolatePointInput(){
-        for (var i=1 ; i<=this.state.interpolatePoint ; i++) {
-            tempTag.push(<Input style={{
-                width: "14%",
-                height: "50%", 
-                backgroundColor:"black", 
-                marginInlineEnd: "5%", 
-                marginBlockEnd: "5%",
-                color: "white",
-                fontSize: "18px",
-                fontWeight: "bold"
-            }} 
-            id={"p"+i} key={"p"+i} placeholder={"p"+i} />)
-        }
     }
     initialValue() {
         x = []
@@ -117,32 +102,8 @@ class LSE extends Component {
             x[i] = parseInt(document.getElementById("x"+i).value);
             y[i] = parseFloat(document.getElementById("y"+i).value);
         }
-        for (i=1 ; i<=this.state.interpolatePoint ; i++) {
-            interpolatePoint[i] = parseInt(document.getElementById("p"+i).value);
-        }
     }
-    L(X, index, n) {
-        var numerate = 1/*ตัวเศษ*/, denominate = 1/*ตัวส่วน*/;
-        for (var i=1 ; i<=n ; i++) {
-            if (i !== index) {
-                numerate *= x[i]-X;
-                denominate *= x[i] - x[index];
-            }
-        } 
-        return parseFloat(numerate/denominate);
-    }
-
-    lagrange(n, X) {
-        fx = 0
-        this.initialValue()
-        for (var i=1 ; i<=n ; i++) {
-            fx += this.L(X, i, n)*y[i];
-        }
-        this.setState({
-            showOutputCard: true
-        })
-
-    } 
+ 
     handleChange(event) {
         this.setState({
             [event.target.name]: event.target.value
@@ -158,27 +119,21 @@ class LSE extends Component {
                       style={{ width: 400, background: "#f44336", color: "#FFFFFFFF", float:"left"}}
                       onChange={this.handleChange}
                     >
+                        {this.state.showInputForm && 
+                            <div>
+                                <h2>Number of X</h2><Input size="large" name="X" style={InputStyle}></Input>
+                                <h2>Number of points(n)</h2><Input size="large" name="nPoints" style={InputStyle}></Input>
+                            </div> 
+                        }                        
                         {this.state.showTableInput && 
                         <div>
                             <Table columns={columns} dataSource={tableTag} pagination={false} bordered={true} bodyStyle={{fontWeight: "bold", fontSize: "18px", color: "white" , overflowY: "scroll", minWidth: 120, maxHeight: 300}}></Table>
-                            <br/><h2>interpolatePoint {parseInt(this.state.interpolatePoint) === 2 ? "(Linear)": 
-                                                       parseInt(this.state.interpolatePoint) === 3 ? "(Quadratic)" :
-                                                       "(Polynomial)"}</h2>{tempTag}
-                        </div>}
-                        
-                        {this.state.showInputForm && 
-                            <div>
-                                <h2>Number of points(n)</h2><Input size="large" name="nPoints" style={InputStyle}></Input>
-                                <h2>X</h2><Input size="large" name="X" style={InputStyle}></Input>
-                                <h2>interpolatePoint</h2><Input size="large" name="interpolatePoint" style={InputStyle}></Input>
-                            </div> 
+                        </div>
                         }
                         <br></br>
                         {this.state.showInputButton && 
                             <Button id="dimention_button" onClick= {
-                                ()=>{this.createTableInput(parseInt(this.state.nPoints));
-                                this.createInterpolatePointInput()}
-                            }  
+                                ()=> this.createTableInput(parseInt(this.state.nPoints), parseInt(this.state.X))}
                                 style={{background: "#4caf50", color: "white", fontSize: "20px"}}>
                                 Submit<br></br>
                             </Button>
@@ -187,7 +142,7 @@ class LSE extends Component {
                             <Button 
                                 id="matrix_button"  
                                 style={{background: "blue", color: "white", fontSize: "20px"}}
-                                onClick={()=>this.lagrange(parseInt(this.state.interpolatePoint), parseFloat(this.state.X))}>
+                                >
                                 Submit
                             </Button>
                         }
