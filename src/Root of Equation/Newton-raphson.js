@@ -6,7 +6,7 @@ import math from 'mathjs';
 import Plot from 'react-plotly.js';
 
 const InputStyle = {
-    background: "#f58216",
+    background: "#1890ff",
     color: "white", 
     fontWeight: "bold", 
     fontSize: "24px"
@@ -106,9 +106,8 @@ class Newton extends Component {
                 <h2 style={{color: "black", fontWeight: "bold"}}>Newton Raphson</h2>
                 <div>
                     <Card
-                    title={"Input False Postion"}
                     bordered={true}
-                    style={{ width: 300, background: "#f44336", color: "#FFFFFFFF"}}
+                    style={{ width: 300, background: "#001529", color: "#FFFFFFFF", float:"left"}}
                     onChange={this.handleChange}
                     >
                         <h2>f(x)</h2><Input size="large" name="fx" style={InputStyle}></Input>
@@ -123,7 +122,7 @@ class Newton extends Component {
                         <Card
                         title={"Graph"}
                         bordered={true}
-                        style={{ width: 500, border:"2px solid black", background: "#f44aaa6", color: "#FFFFFFFF", float:"left", marginLeft: "4%"}}
+                        style={{ width: 500,height: "75vmin",  border:"2px solid black", background: "#f44aaa6", color: "#FFFFFFFF", float:"left"}}
                         >
                             <Plot
                                 data={[
@@ -146,7 +145,7 @@ class Newton extends Component {
                         <Card
                         title={"Output"}
                         bordered={true}
-                        style={{width: "100%", background: "#2196f3", color: "#FFFFFFFF", float:"inline-start", marginBlockStart:"2%"}}
+                        style={{width: "100%", background: "#2196f3", color: "#FFFFFFFF", float:"inline-start"}}
                         id="outputCard"
                         >
                             <Table columns={columns} bordered={true} dataSource={dataInTable} bodyStyle={{fontWeight: "bold", fontSize: "18px", color: "black"}}

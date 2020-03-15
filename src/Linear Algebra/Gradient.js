@@ -4,7 +4,7 @@ import math from 'mathjs';
 import '../screen.scss';
 import 'antd/dist/antd.css';
 const InputStyle = {
-    background: "#f58216",
+    background: "#1890ff",
     color: "white", 
     fontWeight: "bold", 
     fontSize: "24px"
@@ -106,7 +106,7 @@ class Gradient extends Component {
             D = math.add(math.multiply(R, -1), math.multiply(α, D))
             console.log(D)
         }while (epsilon > 0.000001);
-
+        output = x
         this.setState({
             showOutputCard: true
         });
@@ -240,9 +240,9 @@ class Gradient extends Component {
                             <Card
                             title={"Output"}
                             bordered={true}
-                            style={{ width: 400, background: "#3d683d", color: "#FFFFFFFF", float:"left", marginLeft:"2%", position:"fixed"}}
+                            style={{ width: 400, background: "#3d683d", color: "#FFFFFFFF", float:"left"}}
                             onChange={this.handleChange}  id="answerCard">
-                                <p style={{fontSize: "24px", fontWeight: "bold"}}>{output}</p>
+                                <p style={{fontSize: "24px", fontWeight: "bold"}}>{JSON.stringify(output)}</p>
                             </Card>    
                             <Card
                             title={"Output"}

@@ -4,9 +4,8 @@ import '../screen.scss';
 import 'antd/dist/antd.css';
 import math from 'mathjs';
 import Plot from 'react-plotly.js';
-
 const InputStyle = {
-    background: "#f58216",
+    background: "#1890ff",
     color: "white", 
     fontWeight: "bold", 
     fontSize: "24px"
@@ -141,9 +140,8 @@ class FalsePosition extends Component {
                 <h2 style={{color: "black", fontWeight: "bold"}}>False Position</h2>
              
                     <Card
-                    title={"Input False Postion"}
                     bordered={true}
-                    style={{ width: 300, background: "#f44336", color: "#FFFFFFFF"}}
+                    style={{ width: 300, background: "#001529", color: "#FFFFFFFF", float:"left"}}
                     onChange={this.handleChange}
                     >
                         <h2>f(x)</h2><Input size="large" name="fx" style={InputStyle}></Input>
@@ -157,9 +155,8 @@ class FalsePosition extends Component {
                     </Card>
                     {this.state.showGraph &&
                         <Card
-                        title={"Graph"}
                         bordered={true}
-                        style={{ width: 500, border:"2px solid black", background: "#f44aaa6", color: "#FFFFFFFF", float:"left", marginLeft: "4%"}}
+                        style={{ width: 500, height: "75vmin", border:"2px solid black", background: "#f44aaa6", color: "#FFFFFFFF", float:"left"}}
                         >
                             <Plot
                                 data={[
@@ -174,7 +171,7 @@ class FalsePosition extends Component {
                                 ]}
                                 layout={ {title: 'A Fancy Plot'} }
                                 
-                                style={{width: "100%"}}
+                                style={{width: "100%", float:"left"}}
                             />  
                         </Card>                        
                     }

@@ -5,13 +5,13 @@ import 'antd/dist/antd.css';
 import math from 'mathjs';
 
 const InputStyle = {
-    background: "#f58216",
+    background: "#1890ff",
     color: "white", 
     fontWeight: "bold", 
     fontSize: "24px"
 
 };
-var y;
+var y, error, exact;
 class Centralh2 extends Component {
     constructor() {
         super();
@@ -45,6 +45,8 @@ class Centralh2 extends Component {
                 y = (-this.func(x+(3*h)) + 12*this.func(x+(2*h)) - 39*this.func(x+(1*h)) + 56*this.func(x) - 39*this.func(x-(1*h)) + 12*this.func(x-(2*h)) + this.func(x-(3*h))) / (6*Math.pow(h, 4))
 
         }
+        exact = this.funcDiff(x, degree)
+        error = Math.abs((y - exact) / y)*100
         this.setState({
             showOutputCard: true
         })
@@ -54,6 +56,16 @@ class Centralh2 extends Component {
         var expr = math.compile(this.state.fx);
         let scope = {x:parseFloat(X)};
         return expr.eval(scope);        
+    }
+    funcDiff(X, degree) {
+        var temp = this.state.fx, expr 
+        for (var i=1 ; i<=degree ; i++) {
+            temp = math.derivative(temp, 'x')
+            expr = temp
+        }
+        
+        let scope = {x:parseFloat(X)}
+        return expr.eval(scope)
     }
     render() {
         return(
@@ -85,6 +97,8 @@ class Centralh2 extends Component {
                         >
                             <p style={{fontSize: "24px", fontWeight: "bold"}}>
                                 Approximate = {y}<br/>
+                                Exact = {exact.toFixed(8)}<br/>
+                                Error(ε) = {error.toFixed(4)}%<br/>
                             </p>
                         </Card>
                     }              

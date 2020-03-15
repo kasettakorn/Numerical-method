@@ -4,7 +4,7 @@ import '../screen.scss';
 import 'antd/dist/antd.css';
 
 const InputStyle = {
-    background: "#f58216",
+    background: "#1890ff",
     color: "white", 
     fontWeight: "bold", 
     fontSize: "24px"
@@ -147,7 +147,6 @@ class Jordan extends Component {
                 <div>
                     <h2 style={{color: "black", fontWeight: "bold"}}>Gauss-Jordan Method</h2>
                     <Card
-                    title={"Input Gauss"}
                     bordered={true}
                     style={{ width: 400, background: "#f44336", color: "#FFFFFFFF"}}
                     onChange={this.handleChange}

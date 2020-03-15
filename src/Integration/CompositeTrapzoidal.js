@@ -6,7 +6,7 @@ import math from 'mathjs';
 var Algebrite = require('algebrite')
 
 const InputStyle = {
-    background: "#f58216",
+    background: "#1890ff",
     color: "white", 
     fontWeight: "bold", 
     fontSize: "24px"

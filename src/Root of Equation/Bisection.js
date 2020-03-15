@@ -5,7 +5,7 @@ import 'antd/dist/antd.css';
 import math from 'mathjs';
 import Plot from 'react-plotly.js';
 const InputStyle = {
-    background: "#f58216",
+    background: "#1890ff",
     color: "white", 
     fontWeight: "bold", 
     fontSize: "24px"
@@ -139,9 +139,8 @@ class Bisection extends Component {
             <h2 style={{color: "black", fontWeight: "bold"}}>Bisection</h2>
                 <div style={{float:"left"}}>
                     <Card
-                    title={"Input Bisection"}
                     bordered={true}
-                    style={{ width: 300, background: "#f44336", color: "#FFFFFFFF", float:"left"}}
+                    style={{ width: 300, background: "#001529", color: "#FFFFFFFF", float:"left"}}
                     onChange={this.handleChange}
                     id="inputCard"
                     >
@@ -157,7 +156,7 @@ class Bisection extends Component {
                     {this.state.showGraph &&
                         <Card
                         bordered={true}
-                        style={{ width: 500, height:400, border:"2px solid black", background: "#f44aaa6", color: "#FFFFFFFF", float:"left", marginLeft: "4%"}}
+                        style={{ width: 500, height: "75vmin", border:"2px solid black", background: "#f44aaa6", color: "#FFFFFFFF", float:"left"}}
                         >
                             <Plot
                                 data={[

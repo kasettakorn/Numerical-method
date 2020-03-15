@@ -4,14 +4,14 @@ import '../screen.scss';
 import 'antd/dist/antd.css';
 import math from 'mathjs';
 const InputStyle = {
-    background: "#f58216",
+    background: "#1890ff",
     color: "white", 
     fontWeight: "bold", 
     fontSize: "24px"
 
 };
 
-var A = [], B = [], matrixA = [], matrixB = [], output = []
+var A = [], B = [], matrixA = [], matrixB = [], output = [], answer
 
 class Inverse extends Component {
     
@@ -35,6 +35,7 @@ class Inverse extends Component {
         this.initMatrix();
         try {
             A = math.inv(A);
+            answer = math.multiply(A, B)
             for (var i=0 ; i<n ; i++) {
                 for (var j=0 ; j<n ; j++) {
                     if (!Number.isInteger(A[i][j])) {
@@ -124,7 +125,6 @@ class Inverse extends Component {
                 <h2 style={{color: "black", fontWeight: "bold"}}>Matrix Inversion</h2>
                     {/*-------------Input Card-------------------*/}
                     <Card
-                      title={"Input Matrix Inverse"}
                       bordered={true}
                       style={{ width: 400, background: "#f44336", color: "#FFFFFFFF"}}
                       onChange={this.handleChange}
@@ -164,6 +164,7 @@ class Inverse extends Component {
                         style={{ width: 400, background: "#3d683d", color: "#FFFFFFFF", float:"left"}}
                         onChange={this.handleChange}  id="answerCard">
                             <p style={{fontSize: "24px", fontWeight: "bold"}}>{output}</p>
+                            <p style={{fontSize: "24px", fontWeight: "bold"}}>X = {JSON.stringify(answer)}</p>
                         </Card>
                     }
             </div>

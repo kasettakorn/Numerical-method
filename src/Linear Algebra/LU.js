@@ -4,13 +4,12 @@ import '../screen.scss';
 import 'antd/dist/antd.css';
 import math from 'mathjs';
 const InputStyle = {
-    background: "#f58216",
+    background: "#1890ff",
     color: "white", 
     fontWeight: "bold", 
     fontSize: "24px"
 
 };
-
 
 var A = [], B = [], matrixA = [], matrixB = [], output = [], decompose;
 class LU extends Component {
@@ -110,7 +109,6 @@ class LU extends Component {
                 <h2 style={{color: "black", fontWeight: "bold"}}>LU Decomposition</h2>
                 <div>
                     <Card
-                      title={"Input LU"}
                       bordered={true}
                       style={{ width: 400, background: "#f44336", color: "#FFFFFFFF"}}
                       onChange={this.handleChange}

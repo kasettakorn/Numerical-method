@@ -5,13 +5,13 @@ import 'antd/dist/antd.css';
 import math from 'mathjs';
 
 const InputStyle = {
-    background: "#f58216",
+    background: "#1890ff",
     color: "white", 
     fontWeight: "bold", 
     fontSize: "24px"
 
 };
-var y;
+var y, error, exact;
 class Forwardh2 extends Component {
     constructor() {
         super();
@@ -44,6 +44,8 @@ class Forwardh2 extends Component {
             default:
                 y = (-2*this.func(x+(5*h)) + 11*this.func(x+(4*h)) - 24*this.func(x+(3*h)) + 26*this.func(x+(2*h)) - 14*this.func(x+(1*h)) + 3*this.func(x)) / Math.pow(h, 4) 
         }
+        exact = this.funcDiff(x, degree)
+        error = Math.abs((y - exact) / y)*100
         this.setState({
             showOutputCard: true
         })
@@ -52,13 +54,22 @@ class Forwardh2 extends Component {
     func(X) {
         var expr = math.compile(this.state.fx);
         let scope = {x:parseFloat(X)};
-        alert(X + " = " + expr.eval(scope))
         return expr.eval(scope);        
+    }
+    funcDiff(X, degree) {
+        var temp = this.state.fx, expr 
+        for (var i=1 ; i<=degree ; i++) {
+            temp = math.derivative(temp, 'x')
+            expr = temp
+        }
+        
+        let scope = {x:parseFloat(X)}
+        return expr.eval(scope)
     }
     render() {
         return(
             <div style={{padding: "30px" }}>
-                <h2 style={{color: "black", fontWeight: "bold"}}>Forward Divided-Differences O(h)</h2>
+                <h2 style={{color: "black", fontWeight: "bold"}}>Forward Divided-Differences O(h<sup>2</sup>)</h2>
                 <div style={{float:"left"}}>
                     <Card
                     bordered={true}
@@ -85,6 +96,8 @@ class Forwardh2 extends Component {
                         >
                             <p style={{fontSize: "24px", fontWeight: "bold"}}>
                                 Approximate = {y}<br/>
+                                Exact = {exact.toFixed(8)}<br/>
+                                Error(ε) = {error.toFixed(4)}%<br/>
                             </p>
                         </Card>
                     }              

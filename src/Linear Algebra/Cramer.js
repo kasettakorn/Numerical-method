@@ -3,9 +3,8 @@ import {Card, Input, Button} from 'antd';
 import '../screen.scss';
 import 'antd/dist/antd.css';
 import math from 'mathjs';
-
 const InputStyle = {
-    background: "#f58216",
+    background: "#1890ff",
     color: "white", 
     fontWeight: "bold", 
     fontSize: "24px"
@@ -65,7 +64,7 @@ class Cramer extends Component {
         for (var i=1 ; i<=row ; i++) {
             for (var j=1 ; j<=column ; j++) {
                 matrixA.push(<Input style={{
-                    width: "18%",
+                    width: "14%",
                     height: "50%", 
                     backgroundColor:"#06d9a0", 
                     marginInlineEnd: "5%", 
@@ -78,7 +77,7 @@ class Cramer extends Component {
             }
             matrixA.push(<br/>)
             matrixB.push(<Input style={{
-                width: "18%",
+                width: "14%",
                 height: "50%", 
                 backgroundColor:"black", 
                 marginInlineEnd: "5%", 
@@ -115,13 +114,12 @@ class Cramer extends Component {
     }
     render() {
         return(
-            <div style={{ background: "#FFFF", padding: "30px" }}>
+            <div style={{padding: "30px" }}>
                 <h2 style={{color: "black", fontWeight: "bold"}}>Cramer's Rule</h2>
                 <div>
                     <Card
-                    title={"Input Cramer"}
                     bordered={true}
-                    style={{ width: 400, background: "#f44336", color: "#FFFFFFFF"}}
+                    style={{ width: "100%", background: "#f44336", color: "#FFFFFFFF", textAlign: "center"}}
                     onChange={this.handleChange}
                     >
                         {this.state.showMatrixForm && <div><h2>Matrix [A]</h2><br/>{matrixA}<h2>Vector [B]<br/></h2>{matrixB}</div>}
@@ -156,7 +154,7 @@ class Cramer extends Component {
                         <Card
                         title={"Output"}
                         bordered={true}
-                        style={{ width: 400, background: "#3d683d", color: "#FFFFFFFF", float:"left"}}
+                        style={{ width: "100%", background: "#3d683d", color: "#FFFFFFFF", float:"left"}}
                         onChange={this.handleChange}>
                         <p style={{fontSize: "24px", fontWeight: "bold"}}>{answer}</p>
                         </Card>

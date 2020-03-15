@@ -3,7 +3,7 @@ import {Card, Input, Button, Table} from 'antd';
 import '../screen.scss';
 import 'antd/dist/antd.css';
 const InputStyle = {
-    background: "#f58216",
+    background: "#1890ff",
     color: "white", 
     fontWeight: "bold", 
     fontSize: "24px"
@@ -11,7 +11,7 @@ const InputStyle = {
 };
 
 
-var A = [], B = [], matrixA = [], matrixB = [], x , epsilon, dataInTable = [], count=1
+var A = [], B = [], matrixA = [], matrixB = [], x , epsilon, dataInTable = [], count=1, matrixX = []
 var columns = [
     {
       title: "Iteration",
@@ -40,15 +40,12 @@ class Jacobi extends Component {
   
     jacobi(n) {
         this.initMatrix();
-        x = new Array(n);
         var temp;
-        var xold = new Array(n);
+        var xold;
         epsilon = new Array(n);
-        x.fill(0)
-        xold.fill(0);
         do {
             temp = [];
-            xold = x;
+            xold = JSON.parse(JSON.stringify(x));
             for (var i=0 ; i<n ; i++) {
                 var sum = 0;
                 for (var j=0 ; j<n ; j++) {
@@ -59,7 +56,7 @@ class Jacobi extends Component {
                 temp[i] = (B[i] - sum)/A[i][i]; //update x[i]
                 
             }        
-            x = temp;
+            x = JSON.parse(JSON.stringify(temp));
         } while(this.error(x, xold)); //if true , continue next iteration
         /*
         
@@ -86,6 +83,12 @@ class Jacobi extends Component {
         return false;  
     }   
     createMatrix(row, column) {
+        A = []
+        B = []
+        matrixA = []
+        matrixB = []
+        x = []
+        dataInTable = []
         for (var i=1 ; i<=row ; i++) {
             for (var j=1 ; j<=column ; j++) {
                 matrixA.push(<Input style={{
@@ -112,7 +115,17 @@ class Jacobi extends Component {
                 fontWeight: "bold"
             }} 
             id={"b"+i} key={"b"+i} placeholder={"b"+i} />)
-                
+            matrixX.push(<Input style={{
+                width: "18%",
+                height: "50%", 
+                backgroundColor:"black", 
+                marginInlineEnd: "5%", 
+                marginBlockEnd: "5%",
+                color: "white",
+                fontSize: "18px",
+                fontWeight: "bold"
+            }} 
+            id={"x"+i} key={"x"+i} placeholder={"x"+i} />)  
             
         }
 
@@ -133,6 +146,7 @@ class Jacobi extends Component {
                 A[i][j] = (parseFloat(document.getElementById("a"+(i+1)+""+(j+1)).value));
             }
             B.push(parseFloat(document.getElementById("b"+(i+1)).value));
+            x.push(parseFloat(document.getElementById("x"+(i+1)).value));
         }
     }
     initialSchema(n) {
@@ -175,12 +189,11 @@ class Jacobi extends Component {
                 <h2 style={{color: "black", fontWeight: "bold"}}>Jacobi Iteration Method</h2>
                 <div>
                     <Card
-                      title={"Input Matrix Inverse"}
                       bordered={true}
                       style={{ width: 400, background: "#f44336", color: "#FFFFFFFF"}}
                       onChange={this.handleChange}
                     >
-                        {this.state.showMatrixForm && <div><h2>Matrix [A]</h2><br/>{matrixA}<h2>Vector [B]<br/></h2>{matrixB}</div>}
+                        {this.state.showMatrixForm && <div><h2>Matrix [A]</h2><br/>{matrixA}<h2>Vector [B]<br/></h2>{matrixB}<h2>Initial X<br/></h2>{matrixX}</div>}
                         
                         {this.state.showDimentionForm && 
                             <div>

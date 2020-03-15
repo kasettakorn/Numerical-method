@@ -6,7 +6,7 @@ import math from 'mathjs';
 var Algebrite = require('algebrite')
 
 const InputStyle = {
-    background: "#f58216",
+    background: "#1890ff",
     color: "white", 
     fontWeight: "bold", 
     fontSize: "24px"
@@ -33,7 +33,7 @@ class Composite_Simpson extends Component {
     }
     composite_simpson(a, b, n) {
         var h = (b-a)/n
-        I = (h / 3) * (this.func(a) + this.func(b) + 4*this.summationFunction(1, n, 2*h) + 2*this.summationFunction(2, n, 2*h))
+        I = (h / 3) * (this.func(a) + this.func(b) + 4*this.summationFunction(1, n, h) + 2*this.summationFunction(2, n, 2*h))
         exact = this.exactIntegrate(a, b)
         error = Math.abs((exact-I) / exact) * 100
         this.setState({
@@ -47,11 +47,18 @@ class Composite_Simpson extends Component {
     }
     summationFunction(start, n, h) {
         var sum = 0
-        var counter = h
-        for (var i=start ; i<n ; i+=2) {
-            sum += this.func(counter)
-            counter += 2*h
+        if (start % 2 === 0) {
+            n += 2
         }
+        var xi = parseInt(this.state.a) + h
+        for (var i=start ; i<n ;) {
+            i+=2
+            sum += this.func(xi)
+            xi = parseInt(this.state.a) + i*h
+            alert(i*h)
+            
+        }
+        
         return sum
     }
     func(X) {

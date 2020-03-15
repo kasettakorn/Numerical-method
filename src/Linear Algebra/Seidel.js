@@ -3,7 +3,7 @@ import {Card, Input, Button, Table} from 'antd';
 import '../screen.scss';
 import 'antd/dist/antd.css';
 const InputStyle = {
-    background: "#f58216",
+    background: "#1890ff",
     color: "white", 
     fontWeight: "bold", 
     fontSize: "24px"
@@ -11,7 +11,7 @@ const InputStyle = {
 };
 
 
-var A = [], B = [], matrixA = [], matrixB = [], x , epsilon, output = [], dataInTable = [], count=1
+var A = [], B = [], matrixA = [], matrixB = [], x , epsilon, output = [], dataInTable = [], count=1, matrixX = []
 var columns = [
     {
       title: "Iteration",
@@ -41,10 +41,8 @@ class Seidel extends Component {
     seidel(n) {
         this.initMatrix();
         x = new Array(n);
-        var xold = new Array(n);
+        var xold
         epsilon = new Array(n);
-        x.fill(0)
-        xold.fill(0);
         do {
             xold = JSON.parse(JSON.stringify(x));
             for (var i=0 ; i<n ; i++) {
@@ -83,6 +81,13 @@ class Seidel extends Component {
         return false;  
     }   
     createMatrix(row, column) {
+        A = []
+        B = []
+        matrixA = []
+        matrixB = []
+        matrixX = []
+        x = []
+        dataInTable = []
         for (var i=1 ; i<=row ; i++) {
             for (var j=1 ; j<=column ; j++) {
                 matrixA.push(<Input style={{
@@ -109,6 +114,17 @@ class Seidel extends Component {
                 fontWeight: "bold"
             }} 
             id={"b"+i} key={"b"+i} placeholder={"b"+i} />)
+            matrixX.push(<Input style={{
+                width: "18%",
+                height: "50%", 
+                backgroundColor:"black", 
+                marginInlineEnd: "5%", 
+                marginBlockEnd: "5%",
+                color: "white",
+                fontSize: "18px",
+                fontWeight: "bold"
+            }} 
+            id={"x"+i} key={"x"+i} placeholder={"x"+i} />)
                 
             
         }
@@ -130,6 +146,7 @@ class Seidel extends Component {
                 A[i][j] = (parseFloat(document.getElementById("a"+(i+1)+""+(j+1)).value));
             }
             B.push(parseFloat(document.getElementById("b"+(i+1)).value));
+            x.push(parseFloat(document.getElementById("x"+(i+1)).value));
         }
     }
     initialSchema(n) {
@@ -176,7 +193,7 @@ class Seidel extends Component {
                       style={{ width: 400, background: "#f44336", color: "#FFFFFFFF"}}
                       onChange={this.handleChange}
                     >
-                        {this.state.showMatrixForm && <div><h2>Matrix [A]</h2><br/>{matrixA}<h2>Vector [B]<br/></h2>{matrixB}</div>}
+                        {this.state.showMatrixForm && <div><h2>Matrix [A]</h2><br/>{matrixA}<h2>Vector [B]<br/></h2>{matrixB}<h2>Initial X<br/></h2>{matrixX}</div>}
                         
                         {this.state.showDimentionForm && 
                             <div>

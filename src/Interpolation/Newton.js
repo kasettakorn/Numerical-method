@@ -3,7 +3,7 @@ import {Card, Input, Button, Table} from 'antd';
 import '../screen.scss';
 import 'antd/dist/antd.css';
 const InputStyle = {
-    background: "#f58216",
+    background: "#1890ff",
     color: "white", 
     fontWeight: "bold", 
     fontSize: "24px"
@@ -116,29 +116,36 @@ class Newton extends Component {
             interpolatePoint[i] = parseInt(document.getElementById("p"+i).value);
         }
     }
-    C(x1, x2) {
-        return (y[x1] - y[x2])/(x[x1] - x[x2]);
+    C(n) {
+        if (n === 1) {
+            return 0
+        }
+        else {
+            return ((y[interpolatePoint[n]] - y[interpolatePoint[n-1]]) / (x[interpolatePoint[n]] - x[interpolatePoint[n-1]])) - this.C(n-1)
+        }
         
     }
-
+    findX(n, X) {
+        if (n < 1) {
+            return 1
+        }
+        else {
+            console.log(X + " - " + x[interpolatePoint[n]])
+            return (X - x[interpolatePoint[n]]) * this.findX(n-1, X)
+        }
+    }
     newton_difference(n, X) {
         this.initialValue()
-        var C = this.C(interpolatePoint[n], interpolatePoint[1]) //initial C1
-        var count = 1
-        fx = y[interpolatePoint[1]] + C*(parseInt(this.state.X)-x[1]); //inital fx = C0 + C1(x-x0)
-        if (n !== 2) { //if not Linear Interpolation
-            do {
-                for (var i=n ; i>=2 ; i--) {
-                    C -= this.C(interpolatePoint[i], interpolatePoint[i-1]);
-                }
-                C /= (interpolatePoint[n] - interpolatePoint[1]);
-                for (i=1 ; i<=n ; i++) {
-                    C *= X - x[i];
-                }
-                fx += C;
-                count++;
-            }while (count !== n); 
+        fx = y[1]
+        if (n === 2) { //if linear interpolate
+            fx += ((y[interpolatePoint[2]] - y[interpolatePoint[1]]) / (x[interpolatePoint[2]] - x[interpolatePoint[1]]))*(X-x[interpolatePoint[1]])
         }
+        else {
+            for (var i=2 ; i<=n ; i++) {
+                fx += (this.C(i) / (x[interpolatePoint[i]] - x[interpolatePoint[1]])) * this.findX(i-1, X)
+            }            
+        }
+
         this.setState({
             showOutputCard: true
         })
@@ -153,7 +160,7 @@ class Newton extends Component {
     }
     render() {
         return(
-            <div style={{ background: "#FFFF", padding: "30px" }}>
+            <div style={{padding: "30px" }}>
                 <h2 style={{color: "black", fontWeight: "bold"}}>Newton's Divided Differences Interpolation</h2>
                 <div>
                     <Card
@@ -202,7 +209,7 @@ class Newton extends Component {
                         <Card
                         title={"Output"}
                         bordered={true}
-                        style={{width: "50%", border: "2px solid black", background: "rgb(61, 104, 61) none repeat scroll 0% 0%", color: "white", float: "left", marginInlineStart: "4%"}}
+                        style={{width: "50%", border: "2px solid black", background: "rgb(61, 104, 61) none repeat scroll 0% 0%", color: "white", float: "left"}}
                         >
                         <p style={{fontSize: "24px", fontWeight: "bold"}}>{fx}</p>
                             

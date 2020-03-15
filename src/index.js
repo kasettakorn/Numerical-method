@@ -21,7 +21,9 @@ import Gradient from './Linear Algebra/Gradient';
 import NewtonInterpolate from './Interpolation/Newton';
 import Lagrange from './Interpolation/Lagrange';
 import Spline from './Interpolation/Spline';
-import LeastSquare from './Regression/LeastSquare';
+import Linear from './Regression/Linear';
+import Polynomial from './Regression/Polynomial';
+import MultipleLinear from './Regression/MultipleLinear';
 import CompositeTrapezoidal from './Integration/CompositeTrapzoidal';
 import CompositeSimpson from './Integration/CompositeSimpson';
 import ForwardH from './Differentiation/Forwardh';
@@ -41,7 +43,7 @@ class Index extends React.Component {
   rootSubmenuKeys = ['root_submenu', 'algebra_submenu', 'interpolate_submenu', 'regression_submenu', 'integrate_submenu', 'diff_submenu', 'de_submenu'];
 
   state = {
-    openKeys: [''],
+    openKeys: ['regression_submenu'],
   };
 
   onOpenChange = (openKeys) => {
@@ -113,8 +115,14 @@ class Index extends React.Component {
       ReactDOM.render(<Spline />, document.getElementById("content"));
     }
     //--------------------Least Square onClick()---------------------------
-    else if (props.key.localeCompare("menu_lse") === 0) {
-      ReactDOM.render(<LeastSquare />, document.getElementById("content"));
+    else if (props.key.localeCompare("menu_linear") === 0) {
+      ReactDOM.render(<Linear />, document.getElementById("content"));
+    }
+    else if (props.key.localeCompare("menu_poly") === 0) {
+      ReactDOM.render(<Polynomial />, document.getElementById("content"));
+    }
+    else if (props.key.localeCompare("menu_multiple") === 0) {
+      ReactDOM.render(<MultipleLinear />, document.getElementById("content"));
     }
     //--------------------Integration onClick()---------------------------
     else if (props.key.localeCompare("menu_compositeTrapzoidal") === 0) {
@@ -204,7 +212,7 @@ class Index extends React.Component {
                 <Menu.Item key="menu_lagrange">Lagrange</Menu.Item>
                 <Menu.Item key="menu_spline">Spline</Menu.Item>
               </SubMenu>
-              <SubMenu key="regression_submenu" title={<span><Icon type="calculator" />Least Square Error</span>}>
+              <SubMenu key="regression_submenu" title={<span><Icon type="calculator" />Least Squares Regression</span>}>
                 <Menu.Item key="menu_linear">Linear Regression</Menu.Item>
                 <Menu.Item key="menu_poly">Polynomial Regression</Menu.Item>
                 <Menu.Item key="menu_multiple">Multiple Linear Regression</Menu.Item>

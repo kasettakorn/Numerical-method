@@ -5,13 +5,13 @@ import 'antd/dist/antd.css';
 import math from 'mathjs';
 
 const InputStyle = {
-    background: "#f58216",
+    background: "#1890ff",
     color: "white", 
     fontWeight: "bold", 
     fontSize: "24px"
 
 };
-var y;
+var y, error, exact;
 class Forwardh extends Component {
     constructor() {
         super();
@@ -44,6 +44,8 @@ class Forwardh extends Component {
             default:
                 y = (this.func(x+(4*h)) - 4*this.func(x+(3*h)) + 6*this.func(x+(2*h)) - 4*this.func(x+(1*h)) + this.func(x)) / Math.pow(h, 4) 
         }
+        exact = this.funcDiff(x, degree)
+        error = Math.abs((y - exact) / y)*100
         this.setState({
             showOutputCard: true
         })
@@ -53,6 +55,16 @@ class Forwardh extends Component {
         var expr = math.compile(this.state.fx);
         let scope = {x:parseFloat(X)};
         return expr.eval(scope);        
+    }
+    funcDiff(X, degree) {
+        var temp = this.state.fx, expr 
+        for (var i=1 ; i<=degree ; i++) {
+            temp = math.derivative(temp, 'x')
+            expr = temp
+        }
+        
+        let scope = {x:parseFloat(X)}
+        return expr.eval(scope)
     }
     render() {
         return(
@@ -83,7 +95,9 @@ class Forwardh extends Component {
                         id="outputCard"
                         >
                             <p style={{fontSize: "24px", fontWeight: "bold"}}>
-                                Approximate = {y}<br/>
+                                Approximate = {y.toFixed(8)}<br/>
+                                Exact = {exact.toFixed(8)}<br/>
+                                Error(ε) = {error.toFixed(4)}%<br/>
                             </p>
                         </Card>
                     }              

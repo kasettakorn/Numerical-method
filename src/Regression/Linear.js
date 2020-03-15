@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import {Card, Input, Button, Table} from 'antd';
 import '../screen.scss';
 import 'antd/dist/antd.css';
+import math from 'mathjs'
 const InputStyle = {
     background: "#1890ff",
     color: "white", 
@@ -11,9 +12,9 @@ const InputStyle = {
 };
 var columns = [
     {
-      title: "No.",
-      dataIndex: "no",
-      key: "no"
+        title: "No.",
+        dataIndex: "no",
+        key: "no"
     },
     {
         title: "X",
@@ -26,20 +27,19 @@ var columns = [
         key: "y"
     }
 ];
-var x, y, tableTag,  interpolatePoint, tempTag, fx
+var x, y, tableTag, answer
 
-class Lagrange extends Component {
+class Linear extends Component {
     
     constructor() {
         super();
         x = []
         y = []
-        interpolatePoint = []
-        tempTag = []
+
         tableTag = []
         this.state = {
             nPoints: 0,
-            X: 0,
+            m: 0,
             interpolatePoint: 0,
             showInputForm : true,
             showInputButton: true,
@@ -48,22 +48,23 @@ class Lagrange extends Component {
             showOutputCard: false
         }
         this.handleChange = this.handleChange.bind(this);
-        this.lagrange = this.lagrange.bind(this);
+      
     
     }  
     createTableInput(n) {
         for (var i=1 ; i<=n ; i++) {
             x.push(<Input style={{
-                width: "100%",
+                width: "70%",
                 height: "50%", 
                 backgroundColor:"black", 
                 marginInlineEnd: "5%", 
                 marginBlockEnd: "5%",
                 color: "white",
                 fontSize: "18px",
-                fontWeight: "bold"
+                fontWeight: "bold",
+                justifyContent: "center"
             }}
-            id={"x"+i} key={"x"+i} placeholder={"x"+i}/>);
+            id={"x"+i} key={"x"+i} placeholder={"x"+i}/>);            
             y.push(<Input style={{
                 width: "100%",
                 height: "50%", 
@@ -74,15 +75,15 @@ class Lagrange extends Component {
                 fontSize: "18px",
                 fontWeight: "bold"
             }} 
-            id={"y"+i} key={"y"+i} placeholder={"y"+i}/>);   
+            id={"y"+i} key={"y"+i} placeholder={"y"+i}/>);
             tableTag.push({
                 no: i,
                 x: x[i-1],
                 y: y[i-1]
-            });
-        }
+            })
 
-
+        }     
+    
         this.setState({
             showInputForm: false,
             showInputButton: false,
@@ -90,57 +91,57 @@ class Lagrange extends Component {
             showTableButton: true
         })
     }
-    createInterpolatePointInput(){
-        for (var i=1 ; i<=this.state.interpolatePoint ; i++) {
-            tempTag.push(<Input style={{
-                width: "14%",
-                height: "50%", 
-                backgroundColor:"black", 
-                marginInlineEnd: "5%", 
-                marginBlockEnd: "5%",
-                color: "white",
-                fontSize: "18px",
-                fontWeight: "bold"
-            }} 
-            id={"p"+i} key={"p"+i} placeholder={"p"+i} />)
-        }
-    }
-    initialValue() {
-        x = []
+    initialValue(n) {
+        x = new Array(n+1)
         y = []
-        for (var i=1 ; i<=this.state.nPoints ; i++) {
-            x[i] = parseFloat(document.getElementById("x"+i).value);
+        for (var i=1 ; i<=n ; i++) {
+          x[i]= parseInt(document.getElementById("x"+i).value);    
+  
+        }  
+        for (i=1 ; i<=n ; i++) {
             y[i] = parseFloat(document.getElementById("y"+i).value);
         }
-        for (i=1 ; i<=this.state.interpolatePoint ; i++) {
-            interpolatePoint[i] = parseFloat(document.getElementById("p"+i).value);
-        }
     }
-    L(X, index, n) {
-        var numerate = 1/*ตัวเศษ*/, denominate = 1/*ตัวส่วน*/;
-        for (var i=1 ; i<=n ; i++) {
-            if (i !== index) {
-                numerate *= x[i]-X;
-                denominate *= x[i] - x[index];
+    linear(n) {
+        var matrixX = [2], matrixY = [2],exponent=0
+        for (var i=0 ; i<2 ; i++) {
+            matrixX[i] = []
+            for (var j=0 ;  j<2 ; j++) {
+                if (i===0 && j===0) {
+                    matrixX[i][j] = n
+                }
+                else if (i===0 && j===1){
+                    matrixX[i][j] = this.summation(x, 1)
+                }
+                else {
+                    matrixX[i][j] = this.summation(x, exponent+j)
+                }
             }
-        } 
-        console.log(numerate/denominate)
-        return parseFloat(numerate/denominate);
-    }
-
-    lagrange(n, X) {
-        fx = 0
-        this.initialValue()
-        for (var i=1 ; i<=n ; i++) {
-            fx += this.L(X, i, n)*y[i];
+            exponent++
         }
+        matrixY[0] = math.sum(y)
+        matrixY[1] = this.summationOfTwo(x, y)
+        matrixX = math.inv(matrixX)
+        answer = JSON.stringify(math.multiply(matrixX, matrixY))
+
         this.setState({
             showOutputCard: true
-        })
-
-    } 
-
-
+        })        
+    }
+    summation(A ,exponent) {
+        var sum = 0
+        for (var i=1 ; i<A.length ; i++) {
+            sum += Math.pow(A[i], exponent)
+        }
+        return sum       
+    }
+    summationOfTwo(A, B) {
+        var sum = 0
+        for (var i=1 ; i<A.length ; i++) {
+            sum += A[i]*B[i]
+        }
+        return sum
+    }
     handleChange(event) {
         this.setState({
             [event.target.name]: event.target.value
@@ -148,35 +149,28 @@ class Lagrange extends Component {
     }
     render() {
         return(
-            <div style={{padding: "30px" }}>
-                <h2 style={{color: "black", fontWeight: "bold"}}>Lagrange Interpolation</h2>
+            <div style={{ background: "#FFFF", padding: "30px" }}>
+                <h2 style={{color: "black", fontWeight: "bold"}}>Linear Regression</h2>
                 <div>
                     <Card
                       bordered={true}
                       style={{ width: 400, background: "#f44336", color: "#FFFFFFFF", float:"left"}}
                       onChange={this.handleChange}
                     >
-                        {this.state.showTableInput && 
-                        <div>
-                            <Table columns={columns} dataSource={tableTag} pagination={false} bordered={true} bodyStyle={{fontWeight: "bold", fontSize: "18px", color: "white" , overflowY: "scroll", minWidth: 120, maxHeight: 300}}></Table>
-                            <br/><h2>interpolatePoint {parseInt(this.state.interpolatePoint) === 2 ? "(Linear)": 
-                                                       parseInt(this.state.interpolatePoint) === 3 ? "(Quadratic)" :
-                                                       "(Polynomial)"}</h2>{tempTag}
-                        </div>}
-                        
                         {this.state.showInputForm && 
                             <div>
                                 <h2>Number of points(n)</h2><Input size="large" name="nPoints" style={InputStyle}></Input>
-                                <h2>X</h2><Input size="large" name="X" style={InputStyle}></Input>
-                                <h2>interpolatePoint</h2><Input size="large" name="interpolatePoint" style={InputStyle}></Input>
                             </div> 
+                        }                        
+                        {this.state.showTableInput && 
+                        <div>
+                            <Table columns={columns} dataSource={tableTag} pagination={false} bordered={true} bodyStyle={{fontWeight: "bold", fontSize: "18px", color: "white" , overflowY: "scroll", minWidth: 120, maxHeight: 300}}></Table>
+                        </div>
                         }
                         <br></br>
                         {this.state.showInputButton && 
                             <Button id="dimention_button" onClick= {
-                                ()=>{this.createTableInput(parseInt(this.state.nPoints));
-                                this.createInterpolatePointInput()}
-                            }  
+                                ()=> this.createTableInput(parseInt(this.state.nPoints), parseInt(this.state.m))}
                                 style={{background: "#4caf50", color: "white", fontSize: "20px"}}>
                                 Submit<br></br>
                             </Button>
@@ -185,7 +179,9 @@ class Lagrange extends Component {
                             <Button 
                                 id="matrix_button"  
                                 style={{background: "blue", color: "white", fontSize: "20px"}}
-                                onClick={()=>this.lagrange(parseInt(this.state.interpolatePoint), parseFloat(this.state.X))}>
+                                onClick= {()=> {this.initialValue(parseInt(this.state.nPoints)); 
+                                                this.linear(parseInt(this.state.nPoints))}}
+                                >
                                 Submit
                             </Button>
                         }
@@ -197,10 +193,9 @@ class Lagrange extends Component {
                         <Card
                         title={"Output"}
                         bordered={true}
-                        style={{width: 400, border: "2px solid black", background: "rgb(61, 104, 61) none repeat scroll 0% 0%", color: "white", float: "left"}}
+                        style={{width: "100%", border: "2px solid black", background: "rgb(61, 104, 61) none repeat scroll 0% 0%", color: "white", float: "left"}}
                         >
-                        <p style={{fontSize: "24px", fontWeight: "bold"}}>{fx}</p>
-                            
+                            <p style={{fontSize: "24px", fontWeight: "bold"}}>x = {JSON.stringify(answer)}</p> 
                         </Card>                        
                     }
 
@@ -212,4 +207,4 @@ class Lagrange extends Component {
         );
     }
 }
-export default Lagrange;
+export default Linear;

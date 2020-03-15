@@ -5,7 +5,7 @@ import 'antd/dist/antd.css';
 import math from 'mathjs';
 import Plot from 'react-plotly.js';
 const InputStyle = {
-    background: "#f58216",
+    background: "#1890ff",
     color: "white", 
     fontWeight: "bold", 
     fontSize: "24px"
@@ -24,7 +24,7 @@ const columns = [
       dataIndex: "y"
     }
 ];
-var X = [], yE = [];
+var X = [], yE = [], exactEquation;
 class Euler extends Component {
     constructor() {
         super();
@@ -35,6 +35,7 @@ class Euler extends Component {
             x0: 0,
             y0: 0,
             h: 0,
+            exactEquation: "",
             showOutputCard: false,
             showGraph: false
         }
@@ -47,6 +48,7 @@ class Euler extends Component {
 
     }
     euler(start, finish, x0, y0, h) {
+        exactEquation = this.state.exactEquation
         X = []
         yE = []
         dataInTable = []
@@ -56,7 +58,7 @@ class Euler extends Component {
             y = y + this.func(xi, y)*h
             xi += h
             yE.push(y)
-            X.push(xi)
+            X.push(i)
 
         }
         this.createTable(X, yE)
@@ -92,12 +94,13 @@ class Euler extends Component {
                     onChange={this.handleChange}
                     id="inputCard"
                     >
-                        <h2>f(x)</h2><Input size="large" name="fx" style={InputStyle}></Input>
+                        <h2>f(x,y)</h2><Input size="large" name="fx" style={InputStyle}></Input>
                         <h2>X<sub>0</sub></h2><Input size="large" name="x0" style={InputStyle}></Input>
                         <h2>Y<sub>0</sub></h2><Input size="large" name="y0" style={InputStyle}></Input>
                         <h2>Start</h2><Input size="large" name="start" style={InputStyle}></Input>
                         <h2>Finish</h2><Input size="large" name="finish" style={InputStyle}></Input>
                         <h2>H</h2><Input size="large" name="h" style={InputStyle}></Input><br/><br/>
+                        <h2>Exact Equation</h2><Input size="large" name="exactEquation" style={InputStyle}></Input><br/><br/>
                         <Button id="submit_button" onClick= {
                                 ()=>this.euler(parseFloat(this.state.start),  parseFloat(this.state.finish),parseFloat(this.state.x0), parseFloat(this.state.y0), parseFloat(this.state.h))
                             }  
@@ -116,6 +119,16 @@ class Euler extends Component {
                                     y: yE,
                                     type: 'scatter',
                                     marker: {color: 'blue'},
+                                    name: "Euler's"
+                                },
+                                {
+                                    x: X,
+                                    y: X.map(function (x) {
+                                        return math.compile(exactEquation).eval({x: x})
+                                    }),
+                                    type: 'scatter',
+                                    marker: {color: 'red'},
+                                    name: "exact equation"
                                 },
                                 ]}
                                 layout={ {title: 'Euler\'s'} }

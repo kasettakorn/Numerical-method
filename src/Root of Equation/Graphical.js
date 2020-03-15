@@ -6,11 +6,10 @@ import math from 'mathjs';
 import Plot from 'react-plotly.js';
 
 const InputStyle = {
-    background: "#f58216",
+    background: "#1890ff",
     color: "white", 
     fontWeight: "bold", 
-    fontSize: "24px",
-
+    fontSize: "24px"
 
 };
 var dataInTable;
@@ -97,7 +96,7 @@ class Graphical extends Component {
                 <div>
                     <Card
                     bordered={true}
-                    style={{ width: 300, background: "#f44336", color: "#FFFFFFFF", float:"left"}}
+                    style={{ width: 300, background: "#001529", color: "#FFFFFFFF", float:"left"}}
                     onChange={this.handleChange}
                     >
                         <h2>f(x)</h2><Input size="large" name="fx" style={InputStyle}></Input>
@@ -112,7 +111,7 @@ class Graphical extends Component {
                     {this.state.showGraph &&
                         <Card
                         bordered={true}
-                        style={{ width: 500, height: 350, border:"2px solid black", background: "#f44aaa6", color: "#FFFFFFFF", float:"left", marginLeft: "4%"}}
+                        style={{ width: 500, height: "75vmin", border:"2px solid black", background: "#f44aaa6", color: "#FFFFFFFF", float:"left"}}
                         >
                             <Plot
                                 data={[

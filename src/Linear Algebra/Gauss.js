@@ -2,9 +2,8 @@ import React, { Component } from 'react'
 import {Card, Input, Button} from 'antd';
 import '../screen.scss';
 import 'antd/dist/antd.css';
-
 const InputStyle = {
-    background: "#f58216",
+    background: "#1890ff",
     color: "white", 
     fontWeight: "bold", 
     fontSize: "24px"
@@ -52,8 +51,6 @@ class Gauss extends Component {
 
             }
         }
-        alert(A)
-        alert(B)
         //Backward Substitution
         X = new Array(n);
         X[n-1] = B[n-1] / A[n-1][n-1]; //find Xn
@@ -144,7 +141,6 @@ class Gauss extends Component {
                 <div>
                     
                     <Card
-                    title={"Input Gauss"}
                     bordered={true}
                     style={{ width: 400, background: "#f44336", color: "#FFFFFFFF"}}
                     onChange={this.handleChange}
