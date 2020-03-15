@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
 import './index.css';
-import './screen.scss';
+import './screen.css';
 import Graphical from './Root of Equation/Graphical';
 import Bisection from './Root of Equation/Bisection'
 import False from './Root of Equation/False_position';

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {Card, Input, Button} from 'antd';
-import '../screen.scss';
+import '../screen.css';
 import 'antd/dist/antd.css';
 import math from 'mathjs';
 const InputStyle = {
