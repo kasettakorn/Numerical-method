@@ -1,4 +1,4 @@
-h2 {
+h4 {
     color: white;
 }
 
@@ -48,10 +48,7 @@ span {
     background-color: #1890ff;
     color: white;
 }
-#inputCard {
-    position: relative;
-    
-}
+
 @keyframes sliding_left {
     from {
         left: 0px;

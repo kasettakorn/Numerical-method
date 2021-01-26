@@ -5,9 +5,19 @@
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^5.7.2",
     "@fortawesome/react-fontawesome": "^0.1.4",
-    "react": "^16.8.4",
-    "react-dom": "^16.8.4",
-    "react-scripts": "2.1.8"
+    "algebra.js": "^0.2.6",
+    "algebrite": "^1.3.1",
+    "antd": "^4.11.1",
+    "bootstrap": "^4.6.0",
+    "mathjs": "^9.0.0",
+    "mathjs-simple-integral": "^0.1.1",
+    "plotly.js": "^1.58.4",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-mathjax-preview": "^2.1.3",
+    "react-plotly.js": "^2.5.1",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -23,5 +33,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "react-refresh": "^0.9.0"
+  }
 }
