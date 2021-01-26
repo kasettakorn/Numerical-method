@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Card, Input, Button, Table} from 'antd';
-import '../screen.css';
+import '../../screen.css';
 import 'antd/dist/antd.css';
 import { range, compile } from 'mathjs';
 import Plot from 'react-plotly.js';

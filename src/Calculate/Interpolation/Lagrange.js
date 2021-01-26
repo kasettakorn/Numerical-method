@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {Card, Input, Button, Table} from 'antd';
-import '../screen.css';
+import '../../screen.css';
 import 'antd/dist/antd.css';
 const InputStyle = {
     background: "#1890ff",

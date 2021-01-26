@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import {Card, Input, Button} from 'antd';
-import '../screen.css';
+import '../../screen.css';
 import 'antd/dist/antd.css';
-import { range, compile } from 'mathjs';
+import { format } from 'mathjs';
 const InputStyle = {
     background: "#1890ff",
     color: "white", 
@@ -11,7 +11,7 @@ const InputStyle = {
 
 };
 
-var A = [], B = [], matrixA = [], matrixB = [], output = [], decompose = [];
+var A = [], B = [], matrixA = [], matrixB = [], output = []
 class Cholesky extends Component {
     
     constructor() {
@@ -20,9 +20,7 @@ class Cholesky extends Component {
             row: 0,
             column: 0,
             showDimentionForm : true,
-            showDimentionButton: true,
             showMatrixForm: false,
-            showMatrixButton: false,
             showOutputCard: false
         }
         this.handleChange = this.handleChange.bind(this);
@@ -34,7 +32,6 @@ class Cholesky extends Component {
         this.initMatrix();
         var  x  = new Array(n);
         var  y  = new Array(n)
-
 
         if (matrixA[0][0] === 0) {
             for (var i=0 ; i<n ; i++) {
@@ -65,14 +62,13 @@ class Cholesky extends Component {
                 }
                 matrixL[k][i]= (matrixA[i][k]-sum)/matrixL[i][i];//ได้ค่า L ที่ไม่ใช่แนวทะแยง
             }
-            var sum = 0;
+            sum = 0;
             for(j=0;j<k;j++){
                 sum += matrixL[k][j]*matrixL[k][j];
-                //console.log(k+ " and "+j);
             }
             matrixL[k][k] = Math.sqrt(matrixA[k][k]-sum);
         }
-        console.log(matrixL);
+     ;
         y[0] = matrixB[0]/matrixL[0][0];
         for(i=1;i<n;i++){
             sum = 0;
@@ -81,7 +77,7 @@ class Cholesky extends Component {
             }
             y[i] = (matrixB[i]-sum)/matrixL[i][i];
         }
-        console.log(y);
+   
         x[n-1] = y[n-1]/matrixL[n-1][n-1];
         for(i=this.state.row-2;i>=0;i--){
             sum = 0;
@@ -141,9 +137,7 @@ class Cholesky extends Component {
 
         this.setState({
             showDimentionForm: false,
-            showDimentionButton: false,
             showMatrixForm: true,
-            showMatrixButton: true
         })
         
 
@@ -167,54 +161,56 @@ class Cholesky extends Component {
         return(
             <div style={{ background: "#FFFF", padding: "30px" }}>
                 <h2 style={{color: "black", fontWeight: "bold"}}>Cholesky Decomposition</h2>
-                <div>
-                    <Card
-                      bordered={true}
-                      style={{ width: 400, background: "#f44336", color: "#FFFFFFFF"}}
-                      onChange={this.handleChange}
-                    >
-                        {this.state.showMatrixForm && <div><h2>Matrix [A]</h2><br/>{matrixA}<h2>Vector [B]<br/></h2>{matrixB}</div>}
-                        
-                        {this.state.showDimentionForm && 
-                            <div>
-                                <h2>Row</h2><Input size="large" name="row" style={InputStyle}></Input>
-                                <h2>Column</h2><Input size="large" name="column" style={InputStyle}></Input>
-                            </div> 
-                        }
-                        <br></br>
-                        {this.state.showDimentionButton && 
-                            <Button id="dimention_button" onClick= {
-                                ()=>this.createMatrix(this.state.row, this.state.column)
-                                }  
-                                style={{background: "#4caf50", color: "white", fontSize: "20px"}}>
-                                Submit<br></br>
-                                </Button>
-                        }
-                        {this.state.showMatrixButton && 
-                            <Button 
-                                id="matrix_button"  
-                                style={{background: "blue", color: "white", fontSize: "20px"}}
-                                onClick={()=>this.cholesky(this.state.row)}>
-                                Submit
-                            </Button>
-                        }
-                        
-                    </Card>
-                    
-                    {this.state.showOutputCard &&
+                <div className="row">
+                    <div className="col">
                         <Card
-                        title={"Output"}
                         bordered={true}
-                        style={{ width: 400, background: "#3d683d", color: "#FFFFFFFF", float:"left"}}
-                        onChange={this.handleChange}  id="answerCard">
-                            <p style={{fontSize: "24px", fontWeight: "bold"}}>{output}</p>
-                        </Card>
-                    }
-
-                   
-                </div>
-
-                
+                        style={{ background: "#f44336", color: "#FFFFFFFF"}}
+                        onChange={this.handleChange}
+                        >
+                            
+                            
+                            {this.state.showDimentionForm && 
+                                <div>
+                                    <h2>Row</h2><Input size="large" name="row" style={InputStyle}></Input>
+                                    <h2>Column</h2><Input size="large" name="column" style={InputStyle}></Input>
+                                    <Button id="dimention_button" onClick= {
+                                        ()=>this.createMatrix(this.state.row, this.state.column)
+                                        }  
+                                        style={{background: "#4caf50", color: "white", fontSize: "20px"}}>
+                                        Submit<br></br>
+                                    </Button>
+                                </div> 
+                            }
+                            
+                            {this.state.showMatrixForm && 
+                                <div>
+                                    <h2>Matrix [A]</h2><br/>{matrixA}
+                                    <h2>Vector [B]<br/></h2>{matrixB}
+                                    <Button 
+                                        id="matrix_button"  
+                                        style={{background: "blue", color: "white", fontSize: "20px"}}
+                                        onClick={()=>this.cholesky(this.state.row)}>
+                                        Submit
+                                    </Button>
+                                </div>
+                            }
+                        
+                            
+                        </Card>                        
+                    </div>
+                    <div className="col">
+                        {this.state.showOutputCard &&
+                            <Card
+                            title={"Output"}
+                            bordered={true}
+                            style={{ background: "#3d683d", color: "#FFFFFFFF" }}
+                            onChange={this.handleChange}  id="answerCard">
+                                <p style={{fontSize: "24px", fontWeight: "bold"}}>{output}</p>
+                            </Card>
+                        }   
+                    </div>
+                </div>     
             </div>
         );
     }

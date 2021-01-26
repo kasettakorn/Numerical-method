@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import {Card, Input, Button, Table} from 'antd';
-import '../screen.css';
+import '../../screen.css';
 import 'antd/dist/antd.css';
+import { error } from '../../services/Services';
 const InputStyle = {
     background: "#1890ff",
     color: "white", 
@@ -9,7 +10,6 @@ const InputStyle = {
     fontSize: "24px"
 
 };
-
 
 var A = [], B = [], matrixA = [], matrixB = [], x , epsilon, output = [], dataInTable = [], count=1, matrixX = []
 var columns = [
@@ -27,9 +27,7 @@ class Seidel extends Component {
             row: 0,
             column: 0,
             showDimentionForm : true,
-            showDimentionButton: true,
             showMatrixForm: false,
-            showMatrixButton: false,
             showOutputCard: false
         }
         this.handleChange = this.handleChange.bind(this);
@@ -55,7 +53,7 @@ class Seidel extends Component {
                 x[i] = (B[i] - sum)/A[i][i]; //update x[i]
                 
             }        
-        } while(this.error(x, xold)); //if true , continue next iteration
+        } while(error(x, xold)); //if true , continue next iteration
         
         
         for (i=0 ; i<x.length ; i++) {
@@ -131,9 +129,7 @@ class Seidel extends Component {
 
         this.setState({
             showDimentionForm: false,
-            showDimentionButton: false,
             showMatrixForm: true,
-            showMatrixButton: true
         })
 
         
@@ -187,53 +183,60 @@ class Seidel extends Component {
         return(
             <div style={{ background: "#FFFF", padding: "30px" }}>
                 <h2 style={{color: "black", fontWeight: "bold"}}>Gauss-Seidel Iteration Method</h2>
-                <div>
-                    <Card
-                      bordered={true}
-                      style={{ width: 400, background: "#f44336", color: "#FFFFFFFF"}}
-                      onChange={this.handleChange}
-                    >
-                        {this.state.showMatrixForm && <div><h2>Matrix [A]</h2><br/>{matrixA}<h2>Vector [B]<br/></h2>{matrixB}<h2>Initial X<br/></h2>{matrixX}</div>}
-                        
-                        {this.state.showDimentionForm && 
-                            <div>
-                                <h2>Row</h2><Input size="large" name="row" style={InputStyle}></Input>
-                                <h2>Column</h2><Input size="large" name="column" style={InputStyle}></Input>
-                            </div> 
-                        }
-                        <br></br>
-                        {this.state.showDimentionButton && 
-                            <Button id="dimention_button" onClick= {
-                                ()=>{this.createMatrix(this.state.row, this.state.column);
-                                     this.initialSchema(this.state.row)}
-                                }  
-                                style={{background: "#4caf50", color: "white", fontSize: "20px"}}>
-                                Submit<br></br>
-                                </Button>
-                        }
-                        {this.state.showMatrixButton && 
-                            <Button 
-                                id="matrix_button"  
-                                style={{background: "blue", color: "white", fontSize: "20px"}}
-                                onClick={()=>this.seidel(parseInt(this.state.row))}>
-                                Submit
-                            </Button>
-                        }
-                        
-                    </Card>
+                <div className="row">
+                    <div className="col">
+                        <Card
+                        bordered={true}
+                        style={{ background: "#f44336", color: "#FFFFFFFF"}}
+                        onChange={this.handleChange}
+                        >
+                            {this.state.showDimentionForm && 
+                                <div>
+                                    <h2>Row</h2><Input size="large" name="row" style={InputStyle}></Input>
+                                    <h2>Column</h2><Input size="large" name="column" style={InputStyle}></Input>
+                                    <Button id="dimention_button" onClick= {
+                                        ()=>{this.createMatrix(this.state.row, this.state.column);
+                                            this.initialSchema(this.state.row)}
+                                        }  
+                                        style={{background: "#4caf50", color: "white", fontSize: "20px"}}>
+                                        Submit
+                                    </Button>
+                                </div> 
+                            }
+                            
+                            {this.state.showMatrixForm && 
+                                <div>
+                                    <h2>Matrix [A]</h2><br/>{matrixA}
+                                    <h2>Vector [B]<br/></h2>{matrixB}
+                                    <h2>Initial X<br/></h2>{matrixX}
+                                    <Button 
+                                        id="matrix_button"  
+                                        style={{background: "blue", color: "white", fontSize: "20px"}}
+                                        onClick={()=>this.seidel(parseInt(this.state.row))}>
+                                        Submit
+                                    </Button>
+                                </div>
+                            }
+                            
+                        </Card>                        
+                    </div>
+                    <div className="col">
+                        {this.state.showOutputCard && 
+                            <Card
+                            title={"Output"}
+                            bordered={true}
+                            style={{width: "100%", background: "#2196f3", color: "#FFFFFFFF" }}
+                            id="outputCard"
+                            >
+                                <Table columns={columns} dataSource={dataInTable} bordered={true} bodyStyle={{fontWeight: "bold", fontSize: "18px", color: "black", overflowX: "scroll"}}
+                                ></Table>
+                            </Card>
+                        }                           
+                    </div>
+
                     
 
-                    {this.state.showOutputCard && 
-                        <Card
-                        title={"Output"}
-                        bordered={true}
-                        style={{width: "100%", background: "#2196f3", color: "#FFFFFFFF", float:"inline-start", marginBlockStart:"2%"}}
-                        id="outputCard"
-                        >
-                            <Table columns={columns} dataSource={dataInTable} bordered={true} bodyStyle={{fontWeight: "bold", fontSize: "18px", color: "black", overflowX: "scroll"}}
-                            ></Table>
-                        </Card>
-                    }   
+
 
                    
                 </div>

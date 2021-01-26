@@ -85,6 +85,7 @@ class Graphical extends Component {
         });
     }
     render() {
+        let { fx, start, finish } = this.state;
         return (
             <div style={{ background: "#FFFF", padding: "30px" }}>
                 <h2 style={{ color: "black", fontWeight: "bold" }}>Graphical</h2>
@@ -99,14 +100,14 @@ class Graphical extends Component {
                             <h4>Start</h4><Input size="large" name="start" style={InputStyle}></Input>
                             <h4>Finish</h4><Input size="large" name="finish" style={InputStyle}></Input><br /><br />
                             <Button id="submit_button" onClick={
-                                () => this.graphical(parseFloat(this.state.start), parseFloat(this.state.finish))
+                                () => this.graphical(parseFloat(start), parseFloat(finish))
                             }
                                 style={{ background: "#4caf50", color: "white"}}>Submit</Button>
 
                         </Card>                        
                     </div>
                     <div className="col">
-                        {this.state.showGraph && <Graph fx={this.state.fx}  title="Graphical Method" />}
+                        {this.state.showGraph && <Graph fx={fx}  title="Graphical Method" />}
                     </div>
                 </div>
                 <div className="row">

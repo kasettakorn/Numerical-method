@@ -86,6 +86,7 @@ class Newton extends Component {
         });
     }
     render() {
+        let { fx, x0 } = this.state;
         return (
             <div style={{ background: "#FFFF", padding: "30px" }}>
                 <h2 style={{ color: "black", fontWeight: "bold" }}>Newton Raphson</h2>
@@ -99,14 +100,14 @@ class Newton extends Component {
                             <h2>f(x)</h2><Input size="large" name="fx" style={InputStyle}></Input>
                             <h2>X<sub>0</sub></h2><Input size="large" name="x0" style={InputStyle}></Input>
                             <Button id="submit_button" onClick={
-                                () => this.newton_raphson(parseFloat(this.state.x0))
+                                () => this.newton_raphson(parseFloat(x0))
                             }
                                 style={{ background: "#4caf50", color: "white" }}>Submit</Button>
 
                         </Card>
                     </div>
                     <div className="col">
-                        {this.state.showGraph && <Graph fx={this.state.fx} title="Newton-Raphson" />}
+                        {this.state.showGraph && <Graph fx={fx} title="Newton-Raphson" />}
                     </div>
                 </div>
                 <div className="row">

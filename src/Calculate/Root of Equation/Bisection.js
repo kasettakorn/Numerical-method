@@ -145,7 +145,7 @@ class Bisection extends Component {
                             <Button id="submit_button" onClick={
                                 () => this.bisection(parseFloat(xl), parseFloat(xr))
                             }
-                                style={{ background: "#4caf50", color: "white", fontSize: "20px" }}>Submit</Button>
+                                style={{ background: "#4caf50", color: "white" }}>Submit</Button>
 
                         </Card>
                     </div>

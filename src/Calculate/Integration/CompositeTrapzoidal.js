@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Card, Input, Button} from 'antd';
-import '../screen.css';
+import '../../screen.css';
 import 'antd/dist/antd.css';
 import { range, compile } from 'mathjs';
 var Algebrite = require('algebrite')
