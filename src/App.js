@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
 import StarCanvas from './StarfieldCanvas';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { FundFilled, FacebookFilled, BookFilled } from '@ant-design/icons';
+import { FacebookFilled, BookFilled, CalculatorFilled } from '@ant-design/icons';
 
 import Graphical from './Calculate/Root of Equation/Graphical';
 import Bisection from './Calculate/Root of Equation/Bisection';
@@ -50,8 +50,8 @@ class App extends Component {
         <Layout>
           <Header className="header" style={{ height: "80px" }}>
             <div className="headertext">
-              <FundFilled style={{ color: "white", fontSize: "70%" }} />
-              <label className="typewriter">&nbsp;&nbsp;&nbsp;Numerical Method</label>
+          
+              <label className="typewriter"><CalculatorFilled  style={{fontSize:"58px", marginRight:"10px"}} />Numerical Method - วิธีการเชิงตัวเลข</label>
             </div>
           </Header>
 
@@ -160,10 +160,10 @@ class App extends Component {
           <Footer style={{ backgroundColor: "#001529", minHeight: 120 }}>
             <p style={{ fontSize: "24px", fontWeight: "bold", color: "white" }}>
               © All Right Reserved<br />
-              <FacebookFilled style={{ fontSize: "30px" }} /><a target="_blank" rel="noopener noreferrer" href="http://www.facebook.com/kornkung.h" style={{ color: "white", textDecoration: "none" }}> Ronnakorn&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hompoa</a>
-              <p style={{ fontSize: "18px", fontWeight: "bold", color: "white" }}>
-                <BookFilled style={{ fontSize: "30px" }} /> Department of Computer and Information Science - King Mongkut's University of Technology North Bangkok
-              </p>
+              <p style={{fontSize:"22px", verticalAlign:"text-bottom"}}><FacebookFilled style={{ fontSize: "30px" }} /><a target="_blank" rel="noopener noreferrer" href="http://www.facebook.com/kornkung.h" style={{ color: "white", textDecoration: "none" }}> Ronnakorn   Hompoa</a></p>
+
+              <p style={{fontSize:"22px", verticalAlign:"text-bottom"}}><BookFilled style={{ fontSize: "30px" }} /><a target="_blank" rel="noopener noreferrer" href="http://www.facebook.com/kornkung.h" style={{ color: "white", textDecoration: "none" }}> Department of Computer and Information Science - King Mongkut's University of Technology North Bangkok</a></p>
+
             </p>
 
 

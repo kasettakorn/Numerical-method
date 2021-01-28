@@ -26,7 +26,8 @@ label {
 .typewriter {
   display: inline-block;
   overflow: hidden;
-  letter-spacing: 1.5px;
+  font-size: 28px;
+  letter-spacing: 1px;
   animation: typingText 3s , blink .75s step-end infinite;
   white-space: nowrap;
   border-right: 3px solid white;
@@ -34,10 +35,10 @@ label {
 
 @keyframes typingText {
   from {
-    width: 10%;
+    width: 0%;
   }
   to {
-    width: 77%;
+    width: 100%;
   }
 }
 
