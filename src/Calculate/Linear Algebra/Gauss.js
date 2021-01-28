@@ -46,7 +46,6 @@ class Gauss extends Component {
                     A[i][j] = A[i][j] - factor * A[k][j];
                 }
                 B[i] = B[i] - factor * B[k];
-
             }
         }
         //Backward Substitution

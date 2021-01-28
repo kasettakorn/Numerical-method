@@ -3,7 +3,7 @@
  <img width=200px height=200px src="https://i.imgur.com/6wj0hh6.jpg" alt="Project logo"></a>
 </p>
 
-<h3 align="center">numer.react</h3>
+<h3 align="center">Numerical Methods</h3>
 
 <div align="center">
 
@@ -50,19 +50,7 @@ Give examples
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running.
 
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
 
 End with an example of getting some data out of the system or using it for a little demo.
 

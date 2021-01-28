@@ -116,10 +116,10 @@ class LU extends Component {
                                 <div>
                                     <h2>Row</h2><Input size="large" name="row" style={InputStyle}></Input>
                                     <h2>Column</h2><Input size="large" name="column" style={InputStyle}></Input>
-                                    <Button
-                                        id="matrix_button"
-                                        style={{ background: "blue", color: "white"}}
-                                        onClick={() => this.Lu()}>
+                                    <Button id="dimention_button" onClick={
+                                        () => this.createMatrix(this.state.row, this.state.column)
+                                    }
+                                        style={{ background: "#4caf50", color: "white" }}>
                                         Submit
                                 </Button>
                                 </div>
@@ -129,10 +129,11 @@ class LU extends Component {
                                 <div>
                                     <h2>Matrix [A]</h2><br />{matrixA}
                                     <h2>Vector [B]<br /></h2>{matrixB}
-                                    <Button id="dimention_button" onClick={
-                                        () => this.createMatrix(this.state.row, this.state.column)
-                                    }
-                                        style={{ background: "#4caf50", color: "white" }}>
+                                    
+                                <Button
+                                        id="matrix_button"
+                                        style={{ background: "blue", color: "white"}}
+                                        onClick={() => this.Lu()}>
                                         Submit
                                 </Button>
                                 </div>

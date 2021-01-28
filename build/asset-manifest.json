@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/kasettakorn/Numerical-method/static/css/main.080197b3.chunk.css",
+    "main.js": "/kasettakorn/Numerical-method/static/js/main.12571b06.chunk.js",
+    "main.js.map": "/kasettakorn/Numerical-method/static/js/main.12571b06.chunk.js.map",
+    "runtime-main.js": "/kasettakorn/Numerical-method/static/js/runtime-main.4e016123.js",
+    "runtime-main.js.map": "/kasettakorn/Numerical-method/static/js/runtime-main.4e016123.js.map",
+    "static/css/2.322b096b.chunk.css": "/kasettakorn/Numerical-method/static/css/2.322b096b.chunk.css",
+    "static/js/2.25cea657.chunk.js": "/kasettakorn/Numerical-method/static/js/2.25cea657.chunk.js",
+    "static/js/2.25cea657.chunk.js.map": "/kasettakorn/Numerical-method/static/js/2.25cea657.chunk.js.map",
+    "index.html": "/kasettakorn/Numerical-method/index.html",
+    "static/css/2.322b096b.chunk.css.map": "/kasettakorn/Numerical-method/static/css/2.322b096b.chunk.css.map",
+    "static/css/main.080197b3.chunk.css.map": "/kasettakorn/Numerical-method/static/css/main.080197b3.chunk.css.map",
+    "static/js/2.25cea657.chunk.js.LICENSE.txt": "/kasettakorn/Numerical-method/static/js/2.25cea657.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.4e016123.js",
+    "static/css/2.322b096b.chunk.css",
+    "static/js/2.25cea657.chunk.js",
+    "static/css/main.080197b3.chunk.css",
+    "static/js/main.12571b06.chunk.js"
+  ]
+}

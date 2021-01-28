@@ -139,9 +139,9 @@ class Bisection extends Component {
                             onChange={this.handleChange}
                             id="inputCard"
                         >
-                            <h2>f(x)</h2><Input size="large" name="fx" style={InputStyle}></Input>
-                            <h2>X<sub>L</sub></h2><Input size="large" name="xl" style={InputStyle}></Input>
-                            <h2>X<sub>R</sub></h2><Input size="large" name="xr" style={InputStyle}></Input><br /><br />
+                            <h2 style={{color:"white"}}>f(x)</h2><Input size="large" name="fx" style={InputStyle}></Input>
+                            <h2 style={{color:"white"}}>X<sub>L</sub></h2><Input size="large" name="xl" style={InputStyle}></Input>
+                            <h2 style={{color:"white"}}>X<sub>R</sub></h2><Input size="large" name="xr" style={InputStyle}></Input><br /><br />
                             <Button id="submit_button" onClick={
                                 () => this.bisection(parseFloat(xl), parseFloat(xr))
                             }
