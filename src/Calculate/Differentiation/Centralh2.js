@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Card, Input, Button} from 'antd';
 import '../../screen.css';
 import 'antd/dist/antd.css';
-import { range, compile } from 'mathjs';
+import { func, funcDiffDegreeN } from '../../services/Services';
 
 const InputStyle = {
     background: "#1890ff",
@@ -33,75 +33,66 @@ class Centralh2 extends Component {
     centralh2(x, h, degree) {
         switch (degree) {
             case 1:
-                y = (-this.func(x+(2*h)) + 8*this.func(x+(1*h)) - 8*this.func(x-(1*h)) + this.func(x-(2*h))) / (12*h)
+                y = (-func(x+(2*h)) + 8*func(x+(1*h)) - 8*func(x-(1*h)) + func(x-(2*h))) / (12*h)
                 break;
             case 2:
-                y = (-this.func(x+(2*h)) + 16*this.func(x+(1*h)) - 30*this.func(x) + 16*this.func(x-(1*h)) - this.func(x-(2*h))) / (12*Math.pow(h, 2))
+                y = (-func(x+(2*h)) + 16*func(x+(1*h)) - 30*func(x) + 16*func(x-(1*h)) - func(x-(2*h))) / (12*Math.pow(h, 2))
                 break;
             case 3:
-                y = (-this.func(x+(3*h)) + 8*this.func(x+(2*h)) - 13*this.func(x+(1*h)) + 13*this.func(x-(1*h)) - 8*this.func(x-(2*h)) + this.func(x-(3*h))) / (8*Math.pow(h, 3))
+                y = (-func(x+(3*h)) + 8*func(x+(2*h)) - 13*func(x+(1*h)) + 13*func(x-(1*h)) - 8*func(x-(2*h)) + func(x-(3*h))) / (8*Math.pow(h, 3))
                 break;
             default:
-                y = (-this.func(x+(3*h)) + 12*this.func(x+(2*h)) - 39*this.func(x+(1*h)) + 56*this.func(x) - 39*this.func(x-(1*h)) + 12*this.func(x-(2*h)) + this.func(x-(3*h))) / (6*Math.pow(h, 4))
+                y = (-func(x+(3*h)) + 12*func(x+(2*h)) - 39*func(x+(1*h)) + 56*func(x) - 39*func(x-(1*h)) + 12*func(x-(2*h)) + func(x-(3*h))) / (6*Math.pow(h, 4))
 
         }
-        exact = this.funcDiff(x, degree)
+        exact = funcDiffDegreeN(x, degree)
         error = Math.abs((y - exact) / y)*100
         this.setState({
             showOutputCard: true
         })
     }
 
-    func(X) {
-        var expr = compile(this.state.fx);
-        let scope = {x:parseFloat(X)};
-        return expr.evaluate(scope);        
-    }
-    funcDiff(X, degree) {
-        var temp = this.state.fx, expr 
-        for (var i=1 ; i<=degree ; i++) {
-            temp = derivative(temp, 'x')
-            expr = temp
-        }
-        
-        let scope = {x:parseFloat(X)}
-        return expr.evaluate(scope)
-    }
     render() {
         return(
             <div style={{padding: "30px" }}>
                 <h2 style={{color: "black", fontWeight: "bold"}}>Central Divided-Differences O(h<sup>4</sup>)</h2>
-                <div style={{float:"left"}}>
-                    <Card
-                    bordered={true}
-                    style={{ width: 300, background: "#f44336", color: "#FFFFFFFF", float:"left"}}
-                    onChange={this.handleChange}
-                    id="inputCard"
-                    >
-                        <h2>f(x)</h2><Input size="large" name="fx" style={InputStyle}></Input>
-                        <h2>Order derivative</h2><Input size="large" name="degree" style={InputStyle}></Input>
-                        <h2>X</h2><Input size="large" name="x" style={InputStyle}></Input>
-                        <h2>H</h2><Input size="large" name="h" style={InputStyle}></Input><br/><br/>
-                        <Button id="submit_button" onClick= {
-                                ()=>this.centralh2(parseFloat(this.state.x), parseFloat(this.state.h), parseInt(this.state.degree))
-                            }  
-                        style={{background: "#4caf50", color: "white", fontSize: "20px"}}>Submit</Button>
-                        
-                    </Card>     
-                    {this.state.showOutputCard && 
+                <div className="row">
+                    <div className="col">
                         <Card
-                        title={"Output"}
                         bordered={true}
-                        style={{width: "100%", background: "#2196f3", color: "#FFFFFFFF", float:"left"}}
-                        id="outputCard"
+                        style={{ background: "#f44336", color: "#FFFFFFFF"}}
+                        onChange={this.handleChange}
+                        id="inputCard"
                         >
-                            <p style={{fontSize: "24px", fontWeight: "bold"}}>
-                                Approximate = {y}<br/>
-                                Exact = {exact.toFixed(8)}<br/>
-                                Error(ε) = {error.toFixed(4)}%<br/>
-                            </p>
-                        </Card>
-                    }              
+                            <h2>f(x)</h2><Input size="large" name="fx" style={InputStyle}></Input>
+                            <h2>Order derivative</h2><Input size="large" name="degree" style={InputStyle}></Input>
+                            <h2>X</h2><Input size="large" name="x" style={InputStyle}></Input>
+                            <h2>H</h2><Input size="large" name="h" style={InputStyle}></Input><br/><br/>
+                            <Button id="submit_button" onClick= {
+                                    ()=>this.centralh2(parseFloat(this.state.x), parseFloat(this.state.h), parseInt(this.state.degree))
+                                }  
+                            style={{background: "#4caf50", color: "white", fontSize: "20px"}}>Submit</Button>
+                            
+                        </Card>                         
+                    </div>
+                    <div className="col">
+                        {this.state.showOutputCard && 
+                            <Card
+                            title={"Output"}
+                            bordered={true}
+                            style={{background: "#2196f3", color: "#FFFFFFFF"}}
+                            id="outputCard"
+                            >
+                                <p style={{fontSize: "24px", fontWeight: "bold"}}>
+                                    Approximate = {y}<br/>
+                                    Exact = {exact.toFixed(8)}<br/>
+                                    Error(ε) = {error.toFixed(4)}%<br/>
+                                </p>
+                            </Card>
+                        }                        
+                    </div>
+    
+              
                 </div>                
             </div>
         );
