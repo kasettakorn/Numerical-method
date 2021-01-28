@@ -11,6 +11,17 @@ const funcDiff = (X) => {
     let scope = {x:parseFloat(X)};
     return expr.evaluate(scope); 
 }
+
+const funcDiffDegreeN = (X, degree) => {
+    var temp = this.state.fx, expr;
+    for (var i=1 ; i<=degree ; i++) {
+        temp = derivative(temp, 'x')
+        expr = temp
+    }
+    
+    let scope = {x:parseFloat(X)}
+    return expr.evaluate(scope)
+}
 const error = (xnew, xold) => {
     return Math.abs((xnew - xold) / xnew);
 }
@@ -19,4 +30,4 @@ const exactIntegrate = (a, b) => {
     return expr.evaluate({x:b}) - expr.evaluate({x:a})
 
 }
-export { func, funcDiff, error, exactIntegrate };
+export { func, funcDiff, funcDiffDegreeN, error, exactIntegrate };
