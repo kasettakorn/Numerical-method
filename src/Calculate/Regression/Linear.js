@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import {Card, Input, Button, Table} from 'antd';
+import { Card, Input, Button, Table } from 'antd';
 import '../../screen.css';
 import 'antd/dist/antd.css';
-import math from 'mathjs'
+
 const InputStyle = {
     background: "#1890ff",
-    color: "white", 
-    fontWeight: "bold", 
+    color: "white",
+    fontWeight: "bold",
     fontSize: "24px"
 
 };
@@ -30,7 +30,7 @@ var columns = [
 var x, y, tableTag, answer
 
 class Linear extends Component {
-    
+
     constructor() {
         super();
         x = []
@@ -41,80 +41,76 @@ class Linear extends Component {
             nPoints: 0,
             m: 0,
             interpolatePoint: 0,
-            showInputForm : true,
-            showInputButton: true,
+            showInputForm: true,
             showTableInput: false,
-            showTableButton: false,
             showOutputCard: false
         }
         this.handleChange = this.handleChange.bind(this);
-      
-    
-    }  
+
+
+    }
     createTableInput(n) {
-        for (var i=1 ; i<=n ; i++) {
+        for (var i = 1; i <= n; i++) {
             x.push(<Input style={{
                 width: "70%",
-                height: "50%", 
-                backgroundColor:"black", 
-                marginInlineEnd: "5%", 
+                height: "50%",
+                backgroundColor: "black",
+                marginInlineEnd: "5%",
                 marginBlockEnd: "5%",
                 color: "white",
                 fontSize: "18px",
                 fontWeight: "bold",
                 justifyContent: "center"
             }}
-            id={"x"+i} key={"x"+i} placeholder={"x"+i}/>);            
+                id={"x" + i} key={"x" + i} placeholder={"x" + i} />);
             y.push(<Input style={{
                 width: "100%",
-                height: "50%", 
-                backgroundColor:"black", 
-                marginInlineEnd: "5%", 
+                height: "50%",
+                backgroundColor: "black",
+                marginInlineEnd: "5%",
                 marginBlockEnd: "5%",
                 color: "white",
                 fontSize: "18px",
                 fontWeight: "bold"
-            }} 
-            id={"y"+i} key={"y"+i} placeholder={"y"+i}/>);
+            }}
+                id={"y" + i} key={"y" + i} placeholder={"y" + i} />);
             tableTag.push({
                 no: i,
-                x: x[i-1],
-                y: y[i-1]
+                x: x[i - 1],
+                y: y[i - 1]
             })
 
-        }     
-    
+        }
+
         this.setState({
             showInputForm: false,
-            showInputButton: false,
-            showTableInput: true,
-            showTableButton: true
+            showTableInput: true
         })
     }
     initialValue(n) {
-        x = new Array(n+1)
+        x = new Array(n + 1)
         y = []
-        for (var i=1 ; i<=n ; i++) {
-          x[i]= parseInt(document.getElementById("x"+i).value);    
-  
-        }  
-        for (i=1 ; i<=n ; i++) {
-            y[i] = parseFloat(document.getElementById("y"+i).value);
+        for (var i = 1; i <= n; i++) {
+            x[i] = parseInt(document.getElementById("x" + i).value);
+
+        }
+        for (i = 1; i <= n; i++) {
+            y[i] = parseFloat(document.getElementById("y" + i).value);
         }
     }
     linear(n) {
-        var matrixX = [2], matrixY = [2],exponent=0
-        for (var i=0 ; i<2 ; i++) {
+        var matrixX = [2], matrixY = [2], exponent = 0
+        for (var i = 0; i < 2; i++) {
             matrixX[i] = []
-            for (var j=0 ;  j<2 ; j++) {
-                if (i===0 && j===0) {
+            for (var j = 0; j < 2; j++) {
+                if (i === 0 && j === 0) {
                     matrixX[i][j] = n
                 }
-                else if (i===0 && j===1){
+                else if (i === 0 && j === 1) {
                     matrixX[i][j] = this.summation(x, 1)
                 }
                 else {
-                    matrixX[i][j] = this.summation(x, exponent+j)
+                    matrixX[i][j] = this.summation(x, exponent + j)
                 }
             }
             exponent++
@@ -126,19 +122,19 @@ class Linear extends Component {
 
         this.setState({
             showOutputCard: true
-        })        
+        })
     }
-    summation(A ,exponent) {
+    summation(A, exponent) {
         var sum = 0
-        for (var i=1 ; i<A.length ; i++) {
+        for (var i = 1; i < A.length; i++) {
             sum += Math.pow(A[i], exponent)
         }
-        return sum       
+        return sum
     }
     summationOfTwo(A, B) {
         var sum = 0
-        for (var i=1 ; i<A.length ; i++) {
-            sum += A[i]*B[i]
+        for (var i = 1; i < A.length; i++) {
+            sum += A[i] * B[i]
         }
         return sum
     }
@@ -148,61 +144,64 @@ class Linear extends Component {
         });
     }
     render() {
-        return(
+        return (
             <div style={{ background: "#FFFF", padding: "30px" }}>
-                <h2 style={{color: "black", fontWeight: "bold"}}>Linear Regression</h2>
-                <div>
-                    <Card
-                      bordered={true}
-                      style={{ width: 400, background: "#f44336", color: "#FFFFFFFF", float:"left"}}
-                      onChange={this.handleChange}
-                    >
-                        {this.state.showInputForm && 
-                            <div>
-                                <h2>Number of points(n)</h2><Input size="large" name="nPoints" style={InputStyle}></Input>
-                            </div> 
-                        }                        
-                        {this.state.showTableInput && 
-                        <div>
-                            <Table columns={columns} dataSource={tableTag} pagination={false} bordered={true} bodyStyle={{fontWeight: "bold", fontSize: "18px", color: "white" , overflowY: "scroll", minWidth: 120, maxHeight: 300}}></Table>
-                        </div>
-                        }
-                        <br></br>
-                        {this.state.showInputButton && 
-                            <Button id="dimention_button" onClick= {
-                                ()=> this.createTableInput(parseInt(this.state.nPoints), parseInt(this.state.m))}
-                                style={{background: "#4caf50", color: "white", fontSize: "20px"}}>
-                                Submit<br></br>
-                            </Button>
-                        }
-                        {this.state.showTableButton && 
-                            <Button 
-                                id="matrix_button"  
-                                style={{background: "blue", color: "white", fontSize: "20px"}}
-                                onClick= {()=> {this.initialValue(parseInt(this.state.nPoints)); 
-                                                this.linear(parseInt(this.state.nPoints))}}
-                                >
-                                Submit
-                            </Button>
-                        }
-                        
-                    </Card>
-                    
-
-                    {this.state.showOutputCard &&
+                <h2 style={{ color: "black", fontWeight: "bold" }}>Linear Regression</h2>
+                <div className="row">
+                    <div className="col">
                         <Card
-                        title={"Output"}
-                        bordered={true}
-                        style={{width: "100%", border: "2px solid black", background: "rgb(61, 104, 61) none repeat scroll 0% 0%", color: "white", float: "left"}}
+                            bordered={true}
+                            style={{ background: "#f44336", color: "#FFFFFFFF" }}
+                            onChange={this.handleChange}
                         >
-                            <p style={{fontSize: "24px", fontWeight: "bold"}}>x = {JSON.stringify(answer)}</p> 
-                        </Card>                        
-                    }
+                            {this.state.showInputForm &&
+                                <div>
+                                    <h2>Number of points(n)</h2><Input size="large" name="nPoints" style={InputStyle}></Input>
+                                    <Button id="dimention_button" onClick={
+                                        () => this.createTableInput(parseInt(this.state.nPoints), parseInt(this.state.m))}
+                                        style={{ background: "#4caf50", color: "white", fontSize: "20px" }}>
+                                        Submit<br></br>
+                                    </Button>
+                                </div>
+                            }
+                            {this.state.showTableInput &&
+                                <div>
+                                    <Table columns={columns} dataSource={tableTag} pagination={false} bordered={true} bodyStyle={{ fontWeight: "bold", fontSize: "18px", color: "white", overflowY: "scroll", minWidth: 120, maxHeight: 300 }}></Table>
+                                    <Button
+                                        id="matrix_button"
+                                        style={{ background: "blue", color: "white", fontSize: "20px" }}
+                                        onClick={() => {
+                                            this.initialValue(parseInt(this.state.nPoints));
+                                            this.linear(parseInt(this.state.nPoints))
+                                        }}
+                                    >
+                                        Submit
+                                </Button>
+                                </div>
+                            }
 
-                   
+                        </Card>
+                    </div>
+                    <div className="col">
+                        {this.state.showOutputCard &&
+                            <Card
+                                title={"Output"}
+                                bordered={true}
+                                style={{ border: "2px solid black", background: "rgb(61, 104, 61) none repeat scroll 0% 0%", color: "white" }}
+                            >
+                                <p style={{ fontSize: "24px", fontWeight: "bold" }}>x = {JSON.stringify(answer)}</p>
+                            </Card>
+                        }
+                    </div>
+
+
+
+
+
+
                 </div>
 
-                
+
             </div>
         );
     }
