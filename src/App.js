@@ -152,7 +152,7 @@ class App extends Component {
                   {/* Ordinary Differential Equation (ODE) */}
                   <Route exact path="/euler" component={Euler} />
                   <Route exact path="/heun" component={Heun} />
-                  <Route exact path="/modified-euler" component={ModifiedEuler} />
+                  <Route exact path="/modifier-euler" component={ModifiedEuler} />
                 </Switch>
               </Content>
             </Layout>
