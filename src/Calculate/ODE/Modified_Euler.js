@@ -1,13 +1,13 @@
-import React, {Component} from 'react';
-import {Card, Input, Button, Table} from 'antd';
+import React, { Component } from 'react';
+import { Card, Input, Button, Table } from 'antd';
 import '../../screen.css';
 import 'antd/dist/antd.css';
-import { range, compile } from 'mathjs';
-import Plot from 'react-plotly.js';
+import { func } from '../../services/Services';
+
 const InputStyle = {
     background: "#1890ff",
-    color: "white", 
-    fontWeight: "bold", 
+    color: "white",
+    fontWeight: "bold",
     fontSize: "24px"
 
 };
@@ -19,9 +19,9 @@ const columns = [
         key: "x"
     },
     {
-      title: "y",
-      key: "y",
-      dataIndex: "y"
+        title: "y",
+        key: "y",
+        dataIndex: "y"
     }
 ];
 var X = [], yE = [], exactEquation;
@@ -47,8 +47,8 @@ class Modified_Euler extends Component {
         });
 
     }
-    euler(x,y,h){
-        return y+this.func(x,y)*h;
+    euler(x, y, h) {
+        return y + func(x, y) * h;
     }
     modified_euler(start, finish, x0, y0, h) {
         exactEquation = this.state.exactEquation
@@ -60,14 +60,14 @@ class Modified_Euler extends Component {
         var y = y0
         var xi = x0
         //create x and fx
-        for (var i=0 ; i<=finish ; i++) {
-            pointX.push(parseFloat(x0) + i*parseFloat(h))
-            pointfx.push(this.func(parseFloat(x0) + i*parseFloat(h)))
+        for (var i = 0; i <= finish; i++) {
+            pointX.push(parseFloat(x0) + i * parseFloat(h))
+            pointfx.push(func(parseFloat(x0) + i * parseFloat(h)))
         }
-        for (i=1 ; i<finish ; i++) {
-            var y_half = this.euler(pointX[i-1],pointfx[i-1],h/2)
-            var x_half = (pointX[i]+pointX[i-1])/2
-            pointfx[i] = pointfx[i-1] + this.func(x_half,y_half)*h;
+        for (i = 1; i < finish; i++) {
+            var y_half = this.euler(pointX[i - 1], pointfx[i - 1], h / 2)
+            var x_half = (pointX[i] + pointX[i - 1]) / 2
+            pointfx[i] = pointfx[i - 1] + func(x_half, y_half) * h;
             yE.push(pointfx[i])
             X.push(i)
 
@@ -79,88 +79,58 @@ class Modified_Euler extends Component {
         })
     }
 
-    func(X, Y) {
-        var expr = compile(this.state.fx);
-        let scope = {x:parseFloat(X), y:parseFloat(Y)};
-        return expr.evaluate(scope);        
-    }
+
     createTable(x, y) {
         dataInTable = []
-        for (var i=0 ; i<x.length ; i++) {
+        for (var i = 0; i < x.length; i++) {
             dataInTable.push({
                 x: x[i],
                 y: y[i]
             });
         }
-    
+
     }
     render() {
-        return(
-            <div style={{padding: "30px" }}>
-                <h2 style={{color: "black", fontWeight: "bold"}}>Modified Euler's Method</h2>
-                <div style={{float:"left"}}>
-                    <Card
-                    bordered={true}
-                    style={{ width: 300, background: "#f44336", color: "#FFFFFFFF", float:"left"}}
-                    onChange={this.handleChange}
-                    id="inputCard"
-                    >
-                        <h2>f(x,y)</h2><Input size="large" name="fx" style={InputStyle}></Input>
-                        <h2>X<sub>0</sub></h2><Input size="large" name="x0" style={InputStyle}></Input>
-                        <h2>Y<sub>0</sub></h2><Input size="large" name="y0" style={InputStyle}></Input>
-                        <h2>Start</h2><Input size="large" name="start" style={InputStyle}></Input>
-                        <h2>Finish</h2><Input size="large" name="finish" style={InputStyle}></Input>
-                        <h2>H</h2><Input size="large" name="h" style={InputStyle}></Input><br/><br/>
-                        <h2>Exact Equation</h2><Input size="large" name="exactEquation" style={InputStyle}></Input><br/><br/>
-                        <Button id="submit_button" onClick= {
-                                ()=>this.modified_euler(parseFloat(this.state.start),  parseFloat(this.state.finish),parseFloat(this.state.x0), parseFloat(this.state.y0), parseFloat(this.state.h))
-                            }  
-                        style={{background: "#4caf50", color: "white", fontSize: "20px"}}>Submit</Button>
-                        
-                    </Card>  
-                    {this.state.showGraph &&
+        return (
+            <div style={{ padding: "30px" }}>
+                <h2 style={{ color: "black", fontWeight: "bold" }}>Modified Euler's Method</h2>
+                <div className="row">
+                    <div className="col">
                         <Card
-                        bordered={true}
-                        style={{ width: 500, height:400, border:"2px solid black", background: "#f44aaa6", color: "#FFFFFFFF", float:"left"}}
+                            bordered={true}
+                            style={{ background: "#f44336", color: "#FFFFFFFF" }}
+                            onChange={this.handleChange}
+                            id="inputCard"
                         >
-                            <Plot
-                                data={[
-                                {
-                                    x: X,
-                                    y: yE,
-                                    type: 'scatter',
-                                    marker: {color: 'blue'},
-                                    name: "Euler's"
-                                },
-                                {
-                                    x: X,
-                                    y: X.map(function (x) {
-                                        return compile(exactEquation).evaluate({x: x})
-                                    }),
-                                    type: 'scatter',
-                                    marker: {color: 'red'},
-                                    name: "exact equation"
-                                },
-                                ]}
-                                layout={ {title: 'Modified Euler\'s'} }
-                                
-                                style={{width: "100%", float:"left", height: "370px"}}
-                            />  
-                        </Card>                        
-                    }   
-                    <br/>
-                    {this.state.showOutputCard && 
-                        <Card
+                            <h2>f(x,y)</h2><Input size="large" name="fx" style={InputStyle}></Input>
+                            <h2>X<sub>0</sub></h2><Input size="large" name="x0" style={InputStyle}></Input>
+                            <h2>Y<sub>0</sub></h2><Input size="large" name="y0" style={InputStyle}></Input>
+                            <h2>Start</h2><Input size="large" name="start" style={InputStyle}></Input>
+                            <h2>Finish</h2><Input size="large" name="finish" style={InputStyle}></Input>
+                            <h2>H</h2><Input size="large" name="h" style={InputStyle}></Input><br /><br />
+                            <h2>Exact Equation</h2><Input size="large" name="exactEquation" style={InputStyle}></Input><br /><br />
+                            <Button id="submit_button" onClick={
+                                () => this.modified_euler(parseFloat(this.state.start), parseFloat(this.state.finish), parseFloat(this.state.x0), parseFloat(this.state.y0), parseFloat(this.state.h))
+                            }
+                                style={{ background: "#4caf50", color: "white", fontSize: "20px" }}>Submit</Button>
+
+                        </Card>
+                    </div>
+                    <div className="col">
+                        {this.state.showGraph && <Graph fx={fx} title="Modified Euler" />}
+                    </div>
+                </div>
+                {this.state.showOutputCard &&
+                    <Card
                         title={"Output"}
                         bordered={true}
-                        style={{width: "100%", background: "#2196f3", color: "#FFFFFFFF", float:"left"}}
+                        style={{ background: "#2196f3", color: "#FFFFFFFF" }}
                         id="outputCard"
-                        >
-                            <Table columns={columns} bordered={true} dataSource={dataInTable} bodyStyle={{fontWeight: "bold", fontSize: "18px", color: "black"}}
-                            ></Table>
-                        </Card>
-                    }              
-                </div>                
+                    >
+                        <Table columns={columns} bordered={true} dataSource={dataInTable} bodyStyle={{ fontWeight: "bold", fontSize: "18px", color: "black" }}
+                        ></Table>
+                    </Card>
+                }
             </div>
         );
     }

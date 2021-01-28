@@ -2,8 +2,9 @@ import React, {Component} from 'react';
 import {Card, Input, Button, Table} from 'antd';
 import '../../screen.css';
 import 'antd/dist/antd.css';
-import { range, compile } from 'mathjs';
-import Plot from 'react-plotly.js';
+import { func } from '../../services/Services';
+import Graph from '../../components/Graph';
+
 const InputStyle = {
     background: "#1890ff",
     color: "white", 
@@ -55,7 +56,7 @@ class Euler extends Component {
         var y = y0
         var xi = x0
         for (var i=start ; i<=finish ; i+=h) {
-            y = y + this.func(xi, y)*h
+            y = y + func(xi, y)*h
             xi += h
             yE.push(y)
             X.push(i)
@@ -68,11 +69,7 @@ class Euler extends Component {
         })
     }
 
-    func(X, Y) {
-        var expr = compile(this.state.fx);
-        let scope = {x:parseFloat(X), y:parseFloat(Y)};
-        return expr.evaluate(scope);        
-    }
+
     createTable(x, y) {
         dataInTable = []
         for (var i=0 ; i<x.length ; i++) {
@@ -87,69 +84,45 @@ class Euler extends Component {
         return(
             <div style={{padding: "30px" }}>
                 <h2 style={{color: "black", fontWeight: "bold"}}>Euler's Method</h2>
-                <div style={{float:"left"}}>
-                    <Card
-                    bordered={true}
-                    style={{ width: 300, background: "#f44336", color: "#FFFFFFFF", float:"left"}}
-                    onChange={this.handleChange}
-                    id="inputCard"
-                    >
-                        <h2>f(x,y)</h2><Input size="large" name="fx" style={InputStyle}></Input>
-                        <h2>X<sub>0</sub></h2><Input size="large" name="x0" style={InputStyle}></Input>
-                        <h2>Y<sub>0</sub></h2><Input size="large" name="y0" style={InputStyle}></Input>
-                        <h2>Start</h2><Input size="large" name="start" style={InputStyle}></Input>
-                        <h2>Finish</h2><Input size="large" name="finish" style={InputStyle}></Input>
-                        <h2>H</h2><Input size="large" name="h" style={InputStyle}></Input><br/><br/>
-                        <h2>Exact Equation</h2><Input size="large" name="exactEquation" style={InputStyle}></Input><br/><br/>
-                        <Button id="submit_button" onClick= {
-                                ()=>this.euler(parseFloat(this.state.start),  parseFloat(this.state.finish),parseFloat(this.state.x0), parseFloat(this.state.y0), parseFloat(this.state.h))
-                            }  
-                        style={{background: "#4caf50", color: "white", fontSize: "20px"}}>Submit</Button>
-                        
-                    </Card>  
-                    {this.state.showGraph &&
+                <div className="row">
+                    <div className="col">
                         <Card
                         bordered={true}
-                        style={{ width: 500, height:400, border:"2px solid black", background: "#f44aaa6", color: "#FFFFFFFF", float:"left"}}
+                        style={{ background: "#f44336", color: "#FFFFFFFF"}}
+                        onChange={this.handleChange}
+                        id="inputCard"
                         >
-                            <Plot
-                                data={[
-                                {
-                                    x: X,
-                                    y: yE,
-                                    type: 'scatter',
-                                    marker: {color: 'blue'},
-                                    name: "Euler's"
-                                },
-                                {
-                                    x: X,
-                                    y: X.map(function (x) {
-                                        return compile(exactEquation).evaluate({x: x})
-                                    }),
-                                    type: 'scatter',
-                                    marker: {color: 'red'},
-                                    name: "exact equation"
-                                },
-                                ]}
-                                layout={ {title: 'Euler\'s'} }
-                                
-                                style={{width: "100%", float:"left", height: "370px"}}
-                            />  
+                            <h2>f(x,y)</h2><Input size="large" name="fx" style={InputStyle}></Input>
+                            <h2>X<sub>0</sub></h2><Input size="large" name="x0" style={InputStyle}></Input>
+                            <h2>Y<sub>0</sub></h2><Input size="large" name="y0" style={InputStyle}></Input>
+                            <h2>Start</h2><Input size="large" name="start" style={InputStyle}></Input>
+                            <h2>Finish</h2><Input size="large" name="finish" style={InputStyle}></Input>
+                            <h2>H</h2><Input size="large" name="h" style={InputStyle}></Input><br/><br/>
+                            <h2>Exact Equation</h2><Input size="large" name="exactEquation" style={InputStyle}></Input><br/><br/>
+                            <Button id="submit_button" onClick= {
+                                    ()=>this.euler(parseFloat(this.state.start),  parseFloat(this.state.finish),parseFloat(this.state.x0), parseFloat(this.state.y0), parseFloat(this.state.h))
+                                }  
+                            style={{background: "#4caf50", color: "white", fontSize: "20px"}}>Submit</Button>
+                            
                         </Card>                        
-                    }   
-                    <br/>
-                    {this.state.showOutputCard && 
+                    </div>
+                    <div className="col">
+                        {this.state.showGraph && <Graph fx={exactEquation} title="Euler's Method" />}              
+                    </div>
+          
+                </div>  
+                   
+                {this.state.showOutputCard && 
                         <Card
                         title={"Output"}
                         bordered={true}
-                        style={{width: "100%", background: "#2196f3", color: "#FFFFFFFF", float:"left"}}
+                        style={{background: "#2196f3", color: "#FFFFFFFF"}}
                         id="outputCard"
                         >
                             <Table columns={columns} bordered={true} dataSource={dataInTable} bodyStyle={{fontWeight: "bold", fontSize: "18px", color: "black"}}
                             ></Table>
                         </Card>
-                    }              
-                </div>                
+                }            
             </div>
         );
     }

@@ -1,13 +1,14 @@
-import React, {Component} from 'react';
-import {Card, Input, Button, Table} from 'antd';
+import React, { Component } from 'react';
+import { Card, Input, Button, Table } from 'antd';
 import '../../screen.css';
 import 'antd/dist/antd.css';
-import { range, compile } from 'mathjs';
-import Plot from 'react-plotly.js';
+import Graph from '../../components/Graph';
+import { func } from '../../services/Services';
+
 const InputStyle = {
     background: "#1890ff",
-    color: "white", 
-    fontWeight: "bold", 
+    color: "white",
+    fontWeight: "bold",
     fontSize: "24px"
 
 };
@@ -19,9 +20,9 @@ const columns = [
         key: "x"
     },
     {
-      title: "y",
-      key: "y",
-      dataIndex: "y"
+        title: "y",
+        key: "y",
+        dataIndex: "y"
     }
 ];
 var x = [], yE = [], exactEquation;
@@ -54,9 +55,9 @@ class Heun extends Component {
         dataInTable = []
         var y = y0
         var xi = x0
-        for (var i=start ; i<=finish ; i+=h) {
+        for (var i = start; i <= finish; i += h) {
             var euler = this.euler(xi, y, h)
-            y = y + ((this.func(xi, y) + this.func((xi+=h), euler))/2)*h
+            y = y + ((func(xi, y) + func((xi += h), euler)) / 2) * h
             yE.push(y)
             x.push(i)
         }
@@ -67,94 +68,64 @@ class Heun extends Component {
         })
     }
     euler(x, y, h) {
-        return y + this.func(x, y)*h
+        return y + func(x, y) * h
 
     }
 
-    func(X, Y) {
-        var expr = compile(this.state.fx);
-        let scope = {x:parseFloat(X), y:parseFloat(Y)};
-        return expr.evaluate(scope);        
-    }
     createTable(x, y) {
         dataInTable = []
-        for (var i=0 ; i<x.length ; i++) {
+        for (var i = 0; i < x.length; i++) {
             dataInTable.push({
                 x: x[i],
                 y: y[i]
             });
         }
-    
+
     }
     render() {
-        return(
-            <div style={{padding: "30px" }}>
-                <h2 style={{color: "black", fontWeight: "bold"}}>Heun's Method</h2>
-                <div style={{float:"left"}}>
-                    <Card
-                    bordered={true}
-                    style={{ width: 300, background: "#f44336", color: "#FFFFFFFF", float:"left"}}
-                    onChange={this.handleChange}
-                    id="inputCard"
-                    >
-                    
-                        <h2>f(x,y)</h2><Input size="large" name="fx" style={InputStyle}></Input>
-                        <h2>X<sub>0</sub></h2><Input size="large" name="x0" style={InputStyle}></Input>
-                        <h2>Y<sub>0</sub></h2><Input size="large" name="y0" style={InputStyle}></Input>
-                        <h2>Start</h2><Input size="large" name="start" style={InputStyle}></Input>
-                        <h2>Finish</h2><Input size="large" name="finish" style={InputStyle}></Input>
-                        <h2>H</h2><Input size="large" name="h" style={InputStyle}></Input><br/><br/>
-                        <h2>Exact Equation</h2><Input size="large" name="exactEquation" style={InputStyle}></Input><br/><br/>
-
-                        <Button id="submit_button" onClick= {
-                                ()=>this.heun(parseFloat(this.state.start),  parseFloat(this.state.finish),parseFloat(this.state.x0), parseFloat(this.state.y0), parseFloat(this.state.h))
-                            }  
-                        style={{background: "#4caf50", color: "white", fontSize: "20px"}}>Submit</Button>
-                        
-                    </Card>    
-                    {this.state.showGraph &&
+        return (
+            <div style={{ padding: "30px" }}>
+                <h2 style={{ color: "black", fontWeight: "bold" }}>Heun's Method</h2>
+                <div className="row">
+                    <div className="col">
                         <Card
-                        bordered={true}
-                        style={{ width: 500, height:400, border:"2px solid black", background: "#f44aaa6", color: "#FFFFFFFF", float:"left"}}
+                            bordered={true}
+                            style={{ background: "#f44336", color: "#FFFFFFFF" }}
+                            onChange={this.handleChange}
+                            id="inputCard"
                         >
-                            <Plot
-                                data={[
-                                {
-                                    x: x,
-                                    y: yE,
-                                    type: 'scatter',
-                                    marker: {color: 'blue'},
-                                    name: "Heun's"
-                                },
-                                {
-                                    x: x,
-                                    y: x.map(function (x) {
-                                        return compile(exactEquation).evaluate({x: x})
-                                    }),
-                                    type: 'scatter',
-                                    marker: {color: 'red'},
-                                    name: "exact equation"
-                                },
-                                ]}
-                                layout={ {title: 'Heun\'s of ' + this.state.fx} }
-                                
-                                style={{width: "100%", float:"left", height: "370px"}}
-                            />  
-                        </Card>                        
-                    }   
-                    <br/> 
-                    {this.state.showOutputCard && 
-                        <Card
+
+                            <h2>f(x,y)</h2><Input size="large" name="fx" style={InputStyle}></Input>
+                            <h2>X<sub>0</sub></h2><Input size="large" name="x0" style={InputStyle}></Input>
+                            <h2>Y<sub>0</sub></h2><Input size="large" name="y0" style={InputStyle}></Input>
+                            <h2>Start</h2><Input size="large" name="start" style={InputStyle}></Input>
+                            <h2>Finish</h2><Input size="large" name="finish" style={InputStyle}></Input>
+                            <h2>H</h2><Input size="large" name="h" style={InputStyle}></Input><br /><br />
+                            <h2>Exact Equation</h2><Input size="large" name="exactEquation" style={InputStyle}></Input><br /><br />
+
+                            <Button id="submit_button" onClick={
+                                () => this.heun(parseFloat(this.state.start), parseFloat(this.state.finish), parseFloat(this.state.x0), parseFloat(this.state.y0), parseFloat(this.state.h))
+                            }
+                                style={{ background: "#4caf50", color: "white", fontSize: "20px" }}>Submit</Button>
+
+                        </Card>
+                    </div>
+                    <div className="col">
+                        {this.state.showGraph && <Graph fx={fx} title={'Heun\'s of ' + this.state.fx} />}
+
+                    </div>
+                </div>
+                {this.state.showOutputCard &&
+                    <Card
                         title={"Output"}
                         bordered={true}
-                        style={{width: "100%", background: "#2196f3", color: "#FFFFFFFF", float:"left"}}
+                        style={{ background: "#2196f3", color: "#FFFFFFFF" }}
                         id="outputCard"
-                        >
-                            <Table columns={columns} bordered={true} dataSource={dataInTable} bodyStyle={{fontWeight: "bold", fontSize: "18px", color: "black"}}
-                            ></Table>
-                        </Card>
-                    }              
-                </div>                
+                    >
+                        <Table columns={columns} bordered={true} dataSource={dataInTable} bodyStyle={{ fontWeight: "bold", fontSize: "18px", color: "black" }}
+                        ></Table>
+                    </Card>
+                }
             </div>
         );
     }
