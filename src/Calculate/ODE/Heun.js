@@ -111,7 +111,7 @@ class Heun extends Component {
                         </Card>
                     </div>
                     <div className="col">
-                        {this.state.showGraph && <Graph fx={fx} title={'Heun\'s of ' + this.state.fx} />}
+                        {this.state.showGraph && <Graph fx={this.state.fx} title={'Heun\'s of ' + this.state.fx} />}
 
                     </div>
                 </div>

@@ -3,6 +3,7 @@ import { Card, Input, Button, Table } from 'antd';
 import '../../screen.css';
 import 'antd/dist/antd.css';
 import { func } from '../../services/Services';
+import Graph from '../../components/Graph';
 
 const InputStyle = {
     background: "#1890ff",
@@ -24,7 +25,7 @@ const columns = [
         dataIndex: "y"
     }
 ];
-var X = [], yE = [], exactEquation;
+var X = [], yE = [];
 class Modified_Euler extends Component {
     constructor() {
         super();
@@ -51,14 +52,12 @@ class Modified_Euler extends Component {
         return y + func(x, y) * h;
     }
     modified_euler(start, finish, x0, y0, h) {
-        exactEquation = this.state.exactEquation
         X = []
         var pointX = []
         var pointfx = []
         yE = []
         dataInTable = []
-        var y = y0
-        var xi = x0
+
         //create x and fx
         for (var i = 0; i <= finish; i++) {
             pointX.push(parseFloat(x0) + i * parseFloat(h))
@@ -117,7 +116,7 @@ class Modified_Euler extends Component {
                         </Card>
                     </div>
                     <div className="col">
-                        {this.state.showGraph && <Graph fx={fx} title="Modified Euler" />}
+                        {this.state.showGraph && <Graph fx={this.state.fx} title="Modified Euler" />}
                     </div>
                 </div>
                 {this.state.showOutputCard &&

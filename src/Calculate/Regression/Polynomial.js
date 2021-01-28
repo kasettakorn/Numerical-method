@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Card, Input, Button, Table } from 'antd';
 import '../../screen.css';
 import 'antd/dist/antd.css';
+import { lusolve, squeeze, sum } from 'mathjs';
 
 const InputStyle = {
     background: "#1890ff",
