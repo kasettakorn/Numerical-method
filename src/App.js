@@ -20,23 +20,23 @@ import Cholesky from './Calculate/Linear Algebra/Cholesky';
 import Jacobi from './Calculate/Linear Algebra/Jacobi';
 import Seidel from './Calculate/Linear Algebra/Seidel';
 import Gradient from './Calculate/Linear Algebra/Gradient';
-// import NewtonInterpolate from './Calculate/Interpolation/Newton';
-// import Lagrange from './Calculate/Interpolation/Lagrange';
-// import Spline from './Calculate/Interpolation/Spline';
-// import Linear from './Calculate/Regression/Linear';
-// import Polynomial from './Calculate/Regression/Polynomial';
-// import MultipleLinear from './Calculate/Regression/MultipleLinear';
-// import CompositeTrapezoidal from './Calculate/Integration/CompositeTrapzoidal';
-// import CompositeSimpson from './Calculate/Integration/CompositeSimpson';
-// import ForwardH from './Calculate/Differentiation/Forwardh';
-// import ForwardH2 from './Calculate/Differentiation/ForwardH2';
-// import BackwardH from './Calculate/Differentiation/Backwardh';
-// import BackwardH2 from './Calculate/Differentiation/Backwardh2';
-// import CentralH from './Calculate/Differentiation/Centralh';
-// import CentralH2 from './Calculate/Differentiation/Centralh2';
-// import Euler from './Calculate/ODE/Euler';
-// import Heun from './Calculate/ODE/Heun';
-// import ModifiedEuler from './Calculate/ODE/Modified_Euler';
+import NewtonInterpolate from './Calculate/Interpolation/Newton';
+import Lagrange from './Calculate/Interpolation/Lagrange';
+import Spline from './Calculate/Interpolation/Spline';
+import Linear from './Calculate/Regression/Linear';
+import Polynomial from './Calculate/Regression/Polynomial';
+import MultipleLinear from './Calculate/Regression/MultipleLinear';
+import CompositeTrapezoidal from './Calculate/Integration/CompositeTrapzoidal';
+import CompositeSimpson from './Calculate/Integration/CompositeSimpson';
+import ForwardH from './Calculate/Differentiation/Forwardh';
+import ForwardH2 from './Calculate/Differentiation/ForwardH2';
+import BackwardH from './Calculate/Differentiation/Backwardh';
+import BackwardH2 from './Calculate/Differentiation/Backwardh2';
+import CentralH from './Calculate/Differentiation/Centralh';
+import CentralH2 from './Calculate/Differentiation/Centralh2';
+import Euler from './Calculate/ODE/Euler';
+import Heun from './Calculate/ODE/Heun';
+import ModifiedEuler from './Calculate/ODE/Modified_Euler';
 
 
 const { SubMenu } = Menu;
@@ -83,43 +83,45 @@ class App extends Component {
                   <Menu.Item key="menu_gradient"><Link to="/conjugate-gradient">Conjugate Gradient Method</Link></Menu.Item>
                 </SubMenu>
                 <SubMenu key="interpolate_submenu" title={<span>Interpolation</span>}>
-                  <Menu.Item key="menu_divide">Newton Divide Difference</Menu.Item>
-                  <Menu.Item key="menu_lagrange">Lagrange</Menu.Item>
-                  <Menu.Item key="menu_spline">Spline</Menu.Item>
+                  <Menu.Item key="menu_divide"><Link to="/newton">Newton Divide Difference</Link></Menu.Item>
+                  <Menu.Item key="menu_lagrange"><Link to="/lagrange">Lagrange</Link></Menu.Item>
+                  <Menu.Item key="menu_spline"><Link to="/spline">Spline</Link></Menu.Item>
                 </SubMenu>
                 <SubMenu key="regression_submenu" title={<span>Least Squares Regression</span>}>
-                  <Menu.Item key="menu_linear">Linear Regression</Menu.Item>
-                  <Menu.Item key="menu_poly">Polynomial Regression</Menu.Item>
-                  <Menu.Item key="menu_multiple">Multiple Linear Regression</Menu.Item>
+                  <Menu.Item key="menu_linear"><Link to="/linear">Linear Regression</Link></Menu.Item>
+                  <Menu.Item key="menu_poly"><Link to="/polynomial">Polynomial Regression</Link></Menu.Item>
+                  <Menu.Item key="menu_multiple"><Link to="/multiple-linear">Multiple Linear Regression</Link></Menu.Item>
                 </SubMenu>
                 <SubMenu key="integrate_submenu" title={<span>Integration</span>}>
-                  <Menu.Item key="menu_compositeTrapzoidal">Composite Trapezoidal Rule</Menu.Item>
-                  <Menu.Item key="menu_compositeSimpson">Composite Simpson's Rule</Menu.Item>
+                  <Menu.Item key="menu_compositeTrapzoidal"><Link to="/trapezoidal">Composite Trapezoidal Rule</Link></Menu.Item>
+                  <Menu.Item key="menu_compositeSimpson"><Link to="/simpson">Composite Simpson's Rule</Link></Menu.Item>
                 </SubMenu>
                 <SubMenu key="diff_submenu" title={<span>Differentiation</span>}>
-                  <Menu.Item key="menu_forwardh">Forward Divided-Differences O(h)</Menu.Item>
-                  <Menu.Item key="menu_backwardh">Backward Divided-Differences O(h)</Menu.Item>
-                  <Menu.Item key="menu_centralh">Central Divided-Differences O(h{<sup>2</sup>})</Menu.Item>
-                  <Menu.Item key="menu_forward2h">Forward Divided-Differences O(h{<sup>2</sup>})</Menu.Item>
-                  <Menu.Item key="menu_backward2h">Backward Divided-Differences O(h{<sup>2</sup>})</Menu.Item>
-                  <Menu.Item key="menu_central2h">Central Divided-Differences O(h{<sup>4</sup>})</Menu.Item>
+                  <Menu.Item key="menu_forwardh"><Link to="/forwardh">Forward Divided-Differences O(h)</Link></Menu.Item>
+                  <Menu.Item key="menu_backwardh"><Link to="/backwardh">Backward Divided-Differences O(h)</Link></Menu.Item>
+                  <Menu.Item key="menu_centralh"><Link to="/centralh">Central Divided-Differences O(h{<sup>2</sup>})</Link></Menu.Item>
+                  <Menu.Item key="menu_forward2h"><Link to="/forwardh2">Forward Divided-Differences O(h{<sup>2</sup>})</Link></Menu.Item>
+                  <Menu.Item key="menu_backward2h"><Link to="/backwardh2">Backward Divided-Differences O(h{<sup>2</sup>})</Link></Menu.Item>
+                  <Menu.Item key="menu_central2h"><Link to="/centralh2">Central Divided-Differences O(h{<sup>4</sup>})</Link></Menu.Item>
                 </SubMenu>
                 <SubMenu key="de_submenu" title={<span>Ordinary Differential Equation</span>}>
-                  <Menu.Item key="menu_euler">Euler's Method</Menu.Item>
-                  <Menu.Item key="menu_heun">Heun's Method</Menu.Item>
-                  <Menu.Item key="menu_modifier">Modifier Euler's Method</Menu.Item>
+                  <Menu.Item key="menu_euler"><Link to="/euler">Euler's Method</Link></Menu.Item>
+                  <Menu.Item key="menu_heun"><Link to="/heun">Heun's Method</Link></Menu.Item>
+                  <Menu.Item key="menu_modifier"><Link to="/modifier-euler">Modifier Euler's Method</Link></Menu.Item>
                 </SubMenu>
               </Menu>
             </Sider>
             <Layout style={{ padding: '0 24px 24px' }}>
               <Content style={{ padding: 24, margin: 0, minHeight: 280, }}>
                 <Switch>
+                  {/* Root of Equation */}
                   <Route exact path="/graphical" component={Graphical} />
                   <Route exact path="/bisection" component={Bisection} />
                   <Route exact path="/false-position" component={FalsePosition} />
                   <Route exact path="/one-point" component={Onepoint} />
                   <Route exact path="/newton-raphson" component={Newton} />
                   <Route exact path="/secant" component={Secant} />
+                  {/* Linear Algebra */}
                   <Route exact path="/cramer" component={Cramer} />
                   <Route exact path="/gauss" component={Gauss} />
                   <Route exact path="/jordan" component={Jordan} />
@@ -129,6 +131,28 @@ class App extends Component {
                   <Route exact path="/jacobi" component={Jacobi} />
                   <Route exact path="/seidel" component={Seidel} />
                   <Route exact path="/conjugate-gradient" component={Gradient} />
+                  {/* Interpolation */}
+                  <Route exact path="/newton" component={NewtonInterpolate} />
+                  <Route exact path="/lagrange" component={Lagrange} />
+                  <Route exact path="/spline" component={Spline} />
+                  {/* Regression */}
+                  <Route exact path="/linear" component={Linear} />
+                  <Route exact path="/polynomial" component={Polynomial} />
+                  <Route exact path="/multiple-linear" component={MultipleLinear} />
+                  {/* Integration */}
+                  <Route exact path="/trapezoidal" component={CompositeTrapezoidal} />
+                  <Route exact path="/simpson" component={CompositeSimpson} />
+                  {/* Differentiation */}
+                  <Route exact path="/forwardh" component={ForwardH} />
+                  <Route exact path="/backwardh" component={BackwardH} />
+                  <Route exact path="/centralh" component={CentralH} />
+                  <Route exact path="/forwardh2" component={ForwardH2} />
+                  <Route exact path="/backwardh2" component={BackwardH2} />
+                  <Route exact path="/centralh2" component={CentralH2} />
+                  {/* Ordinary Differential Equation (ODE) */}
+                  <Route exact path="/euler" component={Euler} />
+                  <Route exact path="/heun" component={Heun} />
+                  <Route exact path="/modified-euler" component={ModifiedEuler} />
                 </Switch>
               </Content>
             </Layout>
