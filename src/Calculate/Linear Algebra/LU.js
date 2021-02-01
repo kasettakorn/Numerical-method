@@ -107,7 +107,7 @@ class LU extends Component {
                     <div className="col">
                         <Card
                             bordered={true}
-                            style={{ background: "#f44336", color: "#FFFFFFFF" }}
+                            style={{ background: "gray", borderRadius:"15px", color: "#FFFFFFFF" }}
                             onChange={this.handleChange}
                         >
 

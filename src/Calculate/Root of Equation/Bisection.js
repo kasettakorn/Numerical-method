@@ -135,7 +135,7 @@ class Bisection extends Component {
                     <div className="col">
                         <Card
                             bordered={true}
-                            style={{ background: "#001529", color: "#FFFFFFFF" }}
+                            style={{ background: "gray", borderRadius:"15px", color: "#FFFFFFFF" }}
                             onChange={this.handleChange}
                             id="inputCard"
                         >

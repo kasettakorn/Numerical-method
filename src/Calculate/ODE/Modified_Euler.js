@@ -97,7 +97,7 @@ class Modified_Euler extends Component {
                     <div className="col">
                         <Card
                             bordered={true}
-                            style={{ background: "#f44336", color: "#FFFFFFFF" }}
+                            style={{ background: "gray", borderRadius:"15px", color: "#FFFFFFFF" }}
                             onChange={this.handleChange}
                             id="inputCard"
                         >
@@ -116,7 +116,7 @@ class Modified_Euler extends Component {
                         </Card>
                     </div>
                     <div className="col">
-                        {this.state.showGraph && <Graph fx={this.state.fx} title="Modified Euler" />}
+                        {this.state.showGraph && <Graph fx={this.state.exactEquation} title="Modified Euler" />}
                     </div>
                 </div>
                 {this.state.showOutputCard &&

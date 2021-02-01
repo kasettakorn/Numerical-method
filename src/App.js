@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
 import StarCanvas from './StarfieldCanvas';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './screen.css';
 import { FacebookFilled, BookFilled, CalculatorFilled } from '@ant-design/icons';
 
 import Graphical from './Calculate/Root of Equation/Graphical';

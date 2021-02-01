@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Card, Input, Button } from 'antd';
 import '../../screen.css';
 import 'antd/dist/antd.css';
-import { compile } from 'mathjs';
 import { exactIntegrate, func } from '../../services/Services';
 
 const InputStyle = {
@@ -10,8 +9,8 @@ const InputStyle = {
     color: "white",
     fontWeight: "bold",
     fontSize: "24px"
-
 };
+
 var I, exact, error;
 class Composite_Simpson extends Component {
     constructor() {
@@ -47,11 +46,9 @@ class Composite_Simpson extends Component {
             n += 2
         }
         var xi = parseInt(this.state.a) + h
-        for (var i = start; i < n;) {
-            i += 2
+        for (var i = start; i < n; i += 2) {
             sum += func(xi)
             xi = parseInt(this.state.a) + i * h
-            alert(i * h)
 
         }
 
@@ -66,7 +63,7 @@ class Composite_Simpson extends Component {
                     <div className="col">
                         <Card
                             bordered={true}
-                            style={{ background: "#f44336", color: "#FFFFFFFF" }}
+                            style={{ background: "gray", borderRadius:"15px", color: "#FFFFFFFF" }}
                             onChange={this.handleChange}
                             id="inputCard"
                         >

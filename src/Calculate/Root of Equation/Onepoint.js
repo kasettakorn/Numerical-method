@@ -9,7 +9,7 @@ const InputStyle = {
     background: "#1890ff",
     color: "white",
     fontWeight: "bold",
-    fontSize: "24px"
+    fontSize: "24px",
 
 };
 var dataInTable = []
@@ -44,6 +44,7 @@ class Onepoint extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.onepoint = this.onepoint.bind(this);
     }
+    
     onepoint(xold) {
         var xnew = 0;
         var epsilon = parseFloat(0.000000);
@@ -67,8 +68,6 @@ class Onepoint extends Component {
             showOutputCard: true,
             showGraph: true
         })
-
-
     }
 
     createTable(x, error) {
@@ -91,12 +90,12 @@ class Onepoint extends Component {
         let { fx, x0 } = this.state;
         return (
             <div style={{ background: "#FFFF", padding: "30px" }}>
-                <h2 style={{ color: "black", fontWeight: "bold" }}>One Point Iteration</h2>
+                <h2>One Point Iteration</h2>
                 <div className="row">
                     <div className="col">
                         <Card
                             bordered={true}
-                            style={{ background: "#001529", color: "#FFFFFFFF" }}
+                            style={{ background: "gray", borderRadius:"15px", color: "#FFFFFFFF" }}
                             onChange={this.handleChange}
                         >
                             <h2>f(x)</h2><Input size="large" name="fx" style={InputStyle}></Input>
@@ -120,8 +119,10 @@ class Onepoint extends Component {
                             style={{ width: "100%", background: "#2196f3", color: "#FFFFFFFF" }}
                             id="outputCard"
                         >
-                            <Table columns={columns} bordered={true} dataSource={dataInTable} bodyStyle={{ fontWeight: "bold", fontSize: "18px", color: "black" }}
-                            ></Table>
+                            <Table columns={columns} bordered={true} dataSource={dataInTable} bodyStyle={{ fontWeight: "bold", fontSize: "18px", color: "black" }}>
+
+
+                            </Table>
                         </Card>
                     }
                 </div>
