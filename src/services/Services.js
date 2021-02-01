@@ -12,8 +12,8 @@ const funcDiff = (X) => {
     return expr.evaluate(scope); 
 }
 
-const funcDiffDegreeN = (X, degree) => {
-    var temp = this.state.fx, expr;
+const funcDiffDegreeN = (fx, X, degree) => {
+    var temp = fx, expr;
     for (var i=1 ; i<=degree ; i++) {
         temp = derivative(temp, 'x')
         expr = temp

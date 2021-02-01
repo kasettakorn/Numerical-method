@@ -44,7 +44,7 @@ class Backwardh2 extends Component {
             default:
                 y = (3 * func(x) - 14 * func(x - (1 * h)) + 26 * func(x - (2 * h)) - 24 * func(x - (3 * h)) + 11 * func(x - (4 * h)) - 2 * func(x - (5 * h))) / Math.pow(h, 4);
         }
-        exact = funcDiffDegreeN(x, degree);
+        exact = funcDiffDegreeN(this.state.fx, x, degree)
         error = Math.abs((y - exact) / y) * 100;
         this.setState({
             showOutputCard: true

@@ -45,7 +45,7 @@ class Centralh2 extends Component {
                 y = (-func(x+(3*h)) + 12*func(x+(2*h)) - 39*func(x+(1*h)) + 56*func(x) - 39*func(x-(1*h)) + 12*func(x-(2*h)) + func(x-(3*h))) / (6*Math.pow(h, 4))
 
         }
-        exact = funcDiffDegreeN(x, degree)
+        exact = funcDiffDegreeN(this.state.fx, x, degree)
         error = Math.abs((y - exact) / y)*100
         this.setState({
             showOutputCard: true

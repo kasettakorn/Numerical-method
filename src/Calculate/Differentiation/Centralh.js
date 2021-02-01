@@ -44,7 +44,7 @@ class CentralH extends Component {
             default:
                 y = (func(x+(2*h)) - 4*func(x+(1*h)) + 6*func(x) - 4*func(x-(1*h)) + func(x-(2*h))) / Math.pow(h, 4) 
         }
-        exact = funcDiffDegreeN(x, degree)
+        exact = funcDiffDegreeN(this.state.fx, x, degree)
         error = Math.abs((y - exact) / y)*100
         this.setState({
             showOutputCard: true
