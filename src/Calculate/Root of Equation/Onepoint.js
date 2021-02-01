@@ -54,7 +54,7 @@ class Onepoint extends Component {
         data['error'] = []
 
         do {
-            xnew = func(xold);
+            xnew = func(this.state.fx, xold);
             epsilon = error(xnew, xold)
             data['x'][n] = xnew.toFixed(8);
             data['error'][n] = Math.abs(epsilon).toFixed(8);

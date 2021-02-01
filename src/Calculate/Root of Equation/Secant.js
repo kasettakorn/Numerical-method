@@ -57,7 +57,7 @@ class Secant extends Component {
         data['error'][0] = "---";
 
         do {
-            y = x[i] - (func(x[i]) * ((x[i] - x[i - 1]))) / (func(x[i]) - func(x[i - 1]));
+            y = x[i] - (func(this.state.fx, x[i]) * ((x[i] - x[i - 1]))) / (func(this.state.fx, x[i]) - func(this.state.fx, x[i - 1]));
             x.push(y);
             epsilon = error(y, x[i]);
             data['y'][n] = y.toFixed(8);

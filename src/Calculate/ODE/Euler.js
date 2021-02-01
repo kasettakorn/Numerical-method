@@ -56,7 +56,7 @@ class Euler extends Component {
         var y = y0
         var xi = x0
         for (var i=start ; i<=finish ; i+=h) {
-            y = y + func(xi, y)*h
+            y = y + func(this.state.fx, xi, y)*h
             xi += h
             yE.push(y)
             X.push(i)

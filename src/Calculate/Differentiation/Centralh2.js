@@ -33,16 +33,16 @@ class Centralh2 extends Component {
     centralh2(x, h, degree) {
         switch (degree) {
             case 1:
-                y = (-func(x+(2*h)) + 8*func(x+(1*h)) - 8*func(x-(1*h)) + func(x-(2*h))) / (12*h)
+                y = (-func(this.state.fx, x+(2*h)) + 8*func(this.state.fx, x+(1*h)) - 8*func(this.state.fx, x-(1*h)) + func(this.state.fx, x-(2*h))) / (12*h)
                 break;
             case 2:
-                y = (-func(x+(2*h)) + 16*func(x+(1*h)) - 30*func(x) + 16*func(x-(1*h)) - func(x-(2*h))) / (12*Math.pow(h, 2))
+                y = (-func(this.state.fx, x+(2*h)) + 16*func(this.state.fx, x+(1*h)) - 30*func(this.state.fx, x) + 16*func(this.state.fx, x-(1*h)) - func(this.state.fx, x-(2*h))) / (12*Math.pow(h, 2))
                 break;
             case 3:
-                y = (-func(x+(3*h)) + 8*func(x+(2*h)) - 13*func(x+(1*h)) + 13*func(x-(1*h)) - 8*func(x-(2*h)) + func(x-(3*h))) / (8*Math.pow(h, 3))
+                y = (-func(this.state.fx, x+(3*h)) + 8*func(this.state.fx, x+(2*h)) - 13*func(this.state.fx, x+(1*h)) + 13*func(this.state.fx, x-(1*h)) - 8*func(this.state.fx, x-(2*h)) + func(this.state.fx, x-(3*h))) / (8*Math.pow(h, 3))
                 break;
             default:
-                y = (-func(x+(3*h)) + 12*func(x+(2*h)) - 39*func(x+(1*h)) + 56*func(x) - 39*func(x-(1*h)) + 12*func(x-(2*h)) + func(x-(3*h))) / (6*Math.pow(h, 4))
+                y = (-func(this.state.fx, x+(3*h)) + 12*func(this.state.fx, x+(2*h)) - 39*func(this.state.fx, x+(1*h)) + 56*func(this.state.fx, x) - 39*func(this.state.fx, x-(1*h)) + 12*func(this.state.fx, x-(2*h)) + func(this.state.fx, x-(3*h))) / (6*Math.pow(h, 4))
 
         }
         exact = funcDiffDegreeN(this.state.fx, x, degree)

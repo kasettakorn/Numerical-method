@@ -67,12 +67,12 @@ class FalsePosition extends Component {
         data['xr'] = []
         data['x'] = []
         data['error'] = []
-        if (func(xl) < func(xr)) {
+        if (func(this.state.fx, xl) < func(this.state.fx, xr)) {
             increaseFunction = true;
         }
         do {
-            xi = (xl * func(xr) - xr * func(xl)) / (func(xr) - func(xl));
-            if (func(xi) * func(xr) < 0) {
+            xi = (xl * func(this.state.fx, xr) - xr * func(this.state.fx, xl)) / (func(this.state.fx, xr) - func(this.state.fx, xl));
+            if (func(this.state.fx, xi) * func(this.state.fx, xr) < 0) {
                 epsilon = error(xi, xr);
                 if (increaseFunction) {
                     xl = xi;

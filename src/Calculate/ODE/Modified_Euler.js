@@ -49,7 +49,7 @@ class Modified_Euler extends Component {
 
     }
     euler(x, y, h) {
-        return y + func(x, y) * h;
+        return y + func(this.state.fx, x, y) * h;
     }
     modified_euler(start, finish, x0, y0, h) {
         X = []
@@ -61,12 +61,12 @@ class Modified_Euler extends Component {
         //create x and fx
         for (var i = 0; i <= finish; i++) {
             pointX.push(parseFloat(x0) + i * parseFloat(h))
-            pointfx.push(func(parseFloat(x0) + i * parseFloat(h)))
+            pointfx.push(func(this.state.fx, parseFloat(x0) + i * parseFloat(h)))
         }
         for (i = 1; i < finish; i++) {
             var y_half = this.euler(pointX[i - 1], pointfx[i - 1], h / 2)
             var x_half = (pointX[i] + pointX[i - 1]) / 2
-            pointfx[i] = pointfx[i - 1] + func(x_half, y_half) * h;
+            pointfx[i] = pointfx[i - 1] + func(this.state.fx, x_half, y_half) * h;
             yE.push(pointfx[i])
             X.push(i)
 

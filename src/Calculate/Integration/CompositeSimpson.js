@@ -32,8 +32,8 @@ class Composite_Simpson extends Component {
     }
     composite_simpson(a, b, n) {
         var h = (b - a) / n
-        I = (h / 3) * (func(a) + func(b) + 4 * this.summationFunction(1, n, h) + 2 * this.summationFunction(2, n, 2 * h))
-        exact = exactIntegrate(a, b)
+        I = (h / 3) * (func(this.state.fx, a) + func(this.state.fx, b) + (4 * this.summationFunction(1, n, h)) + (2 * this.summationFunction(2, n, 2 * h)))
+        exact = exactIntegrate(this.state.fx, a, b)
         error = Math.abs((exact - I) / exact) * 100
         this.setState({
             showOutputCard: true
@@ -47,7 +47,7 @@ class Composite_Simpson extends Component {
         }
         var xi = parseInt(this.state.a) + h
         for (var i = start; i < n; i += 2) {
-            sum += func(xi)
+            sum += func(this.state.fx, xi)
             xi = parseInt(this.state.a) + i * h
 
         }

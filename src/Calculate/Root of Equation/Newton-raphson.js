@@ -53,7 +53,7 @@ class Newton extends Component {
         data['x'] = []
         data['error'] = []
         do {
-            xnew = xold - (func(xold) / funcDiff(xold));
+            xnew = xold - (func(this.state.fx, xold) / funcDiff(xold));
             epsilon = error(xnew, xold)
             data['x'][n] = xnew.toFixed(8);
             data['error'][n] = Math.abs(epsilon).toFixed(8);

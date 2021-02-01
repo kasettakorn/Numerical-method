@@ -56,7 +56,7 @@ class Heun extends Component {
         var xi = x0
         for (var i = start; i <= finish; i += h) {
             var euler = this.euler(xi, y, h)
-            y = y + ((func(xi, y) + func((xi += h), euler)) / 2) * h
+            y = y + ((func(this.state.fx, xi, y) + func(this.state.fx, (xi += h), euler)) / 2) * h
             yE.push(y)
             x.push(i)
         }
@@ -67,7 +67,7 @@ class Heun extends Component {
         })
     }
     euler(x, y, h) {
-        return y + func(x, y) * h
+        return y + func(this.state.fx, x, y) * h
 
     }
 

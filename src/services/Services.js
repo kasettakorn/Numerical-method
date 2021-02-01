@@ -25,8 +25,8 @@ const funcDiffDegreeN = (fx, X, degree) => {
 const error = (xnew, xold) => {
     return Math.abs((xnew - xold) / xnew);
 }
-const exactIntegrate = (a, b) => {
-    var expr = compile(Algebrite.integral(Algebrite.evaluate(this.state.fx)).toString())
+const exactIntegrate = (fx, a, b) => {
+    var expr = compile(Algebrite.integral(Algebrite.eval(fx)).toString())
     return expr.evaluate({x:b}) - expr.evaluate({x:a})
 
 }

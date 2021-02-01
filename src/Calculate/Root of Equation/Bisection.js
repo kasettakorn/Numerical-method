@@ -67,13 +67,13 @@ class Bisection extends Component {
         data['xr'] = []
         data['x'] = []
         data['error'] = []
-        if (func(xl) < func(xr)) {
+        if (func(this.state.fx, xl) < func(this.state.fx, xr)) {
             increaseFunction = true;
         }
 
         do {
             xm = (xl + xr) / 2;
-            if (func(xm) * func(xr) < 0) {
+            if (func(this.state.fx, xm) * func(this.state.fx, xr) < 0) {
                 sum = error(xm, xr);
                 if (increaseFunction) {
                     xl = xm;

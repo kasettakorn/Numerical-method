@@ -33,8 +33,8 @@ class Composite_Trapezoidal extends Component {
     }
     composite_trapezoidal(a, b, n) {
         var h = (b - a) / n
-        I = (h / 2) * (func(a) + func(b) + 2 * this.summationFunction(n, h))
-        exact = exactIntegrate(a, b);
+        I = (h / 2) * (func(this.state.fx, a) + func(this.state.fx, b) + 2 * this.summationFunction(n, h))
+        exact = exactIntegrate(this.state.fx, a, b)
         error = Math.abs((exact - I) / exact) * 100
         this.setState({
             showOutputCard: true
@@ -45,7 +45,7 @@ class Composite_Trapezoidal extends Component {
         var sum = 0
         var counter = h
         for (var i = 1; i < n; i++) {
-            sum += func(counter)
+            sum += func(this.state.fx, counter)
             counter += h
         }
         return sum

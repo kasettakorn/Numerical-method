@@ -33,16 +33,16 @@ class Forwardh extends Component {
     forwardh(x, h, degree) {
         switch (degree) {
             case 1:
-                y = (func(x + (1 * h)) - func(x)) / h
+                y = (func(this.state.fx, x + (1 * h)) - func(this.state.fx, x)) / h
                 break;
             case 2:
-                y = (func(x + (2 * h)) - 2 * func(x + (1 * h)) + func(x)) / Math.pow(h, 2)
+                y = (func(this.state.fx, x + (2 * h)) - 2 * func(this.state.fx, x + (1 * h)) + func(this.state.fx, x)) / Math.pow(h, 2)
                 break;
             case 3:
-                y = (func(x + (3 * h)) - 3 * func(x + (2 * h)) + 3 * func(x + (1 * h)) - func(x)) / Math.pow(h, 3)
+                y = (func(this.state.fx, x + (3 * h)) - 3 * func(this.state.fx, x + (2 * h)) + 3 * func(this.state.fx, x + (1 * h)) - func(this.state.fx, x)) / Math.pow(h, 3)
                 break;
             default:
-                y = (func(x + (4 * h)) - 4 * func(x + (3 * h)) + 6 * func(x + (2 * h)) - 4 * func(x + (1 * h)) + func(x)) / Math.pow(h, 4)
+                y = (func(this.state.fx, x + (4 * h)) - 4 * func(this.state.fx, x + (3 * h)) + 6 * func(this.state.fx, x + (2 * h)) - 4 * func(this.state.fx, x + (1 * h)) + func(this.state.fx, x)) / Math.pow(h, 4)
         }
         exact = funcDiffDegreeN(this.state.fx, x, degree)
         error = Math.abs((y - exact) / y) * 100

@@ -54,7 +54,7 @@ class Graphical extends Component {
         console.log(typeof (this.state.start))
         for (var i = parseInt(this.state.start); i <= parseInt(this.state.finish); i++) {
             data['x'].push(i);
-            data['y'].push(func(i));
+            data['y'].push(func(this.state.fx, i));
 
         }
 
