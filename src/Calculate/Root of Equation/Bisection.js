@@ -161,7 +161,7 @@ class Bisection extends Component {
                             style={{ width: "100%", background: "#2196f3", color: "#FFFFFFFF" }}
                             id="outputCard"
                         >
-                            <Table columns={columns} dataSource={dataInTable} bodyStyle={{ fontWeight: "bold", fontSize: "18px", color: "black" }}></Table>
+                            <Table pagination={{defaultPageSize: 5}} columns={columns} dataSource={dataInTable} bodyStyle={{ fontWeight: "bold", fontSize: "18px", color: "black" }}></Table>
                         </Card>
                     }
                 </div>

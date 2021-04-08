@@ -6,8 +6,8 @@ const func = (fx, X) => {
     let scope = { x: parseFloat(X) }; //f(x) ; x=input
     return expr.evaluate(scope);
 }
-const funcDiff = (X) => {
-    var expr = derivative(X, 'x');
+const funcDiff = (fx, X) => {
+    var expr = derivative(fx, 'x');
     let scope = {x:parseFloat(X)};
     return expr.evaluate(scope); 
 }
