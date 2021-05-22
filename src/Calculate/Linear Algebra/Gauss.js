@@ -50,7 +50,7 @@ class Gauss extends Component {
         }
         //Backward Substitution
         X = new Array(n);
-        X[n - 1] = B[n - 1] / A[n - 1][n - 1]; //find Xn
+        X[n - 1] = Math.round(B[n - 1] / A[n - 1][n - 1]); //find Xn
         for (i = n - 2; i >= 0; i--) { //find Xn-1 to X1
             var sum = B[i];
             for (j = i + 1; j < n; j++) {
