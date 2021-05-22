@@ -1,6 +1,15 @@
 import { compile, derivative } from 'mathjs';
 var Algebrite = require('algebrite');
 
+const getXL_XR_from_API = async () => {
+    const response = await fetch("http://localhost:5004/api/function_LR").then(res => {
+       // console.log(res.json());
+        return res.json();
+    })
+    return response;
+
+}
+
 const func = (fx, X) => {
     var expr = compile(fx); // f(x)
     let scope = { x: parseFloat(X) }; //f(x) ; x=input
@@ -30,4 +39,4 @@ const exactIntegrate = (fx, a, b) => {
     return expr.evaluate({x:b}) - expr.evaluate({x:a})
 
 }
-export { func, funcDiff, funcDiffDegreeN, error, exactIntegrate };
+export { getXL_XR_from_API, func, funcDiff, funcDiffDegreeN, error, exactIntegrate };

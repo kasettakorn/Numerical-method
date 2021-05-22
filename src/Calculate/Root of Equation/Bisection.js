@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Card, Input, Button, Table } from 'antd';
 import '../../screen.css';
 import 'antd/dist/antd.css';
-import { error, func } from '../../services/Services';
+import { error, func, getXL_XR_from_API } from '../../services/Services';
 import Graph from '../../components/Graph';
 
 const InputStyle = {
@@ -45,17 +45,21 @@ class Bisection extends Component {
 
     constructor() {
         super();
-        this.state = {
-            fx: "",
-            xl: 0,
-            xr: 0,
-            showOutputCard: false,
-            showGraph: false,
-            moveLeft: false
-        }
+        this.state = this.getInitialState();
         this.handleChange = this.handleChange.bind(this);
         this.bisection = this.bisection.bind(this);
+        this.handleAPI = this.handleAPI.bind(this);
     }
+
+    getInitialState = () => ({
+        fx: "",
+        xl: 0,
+        xr: 0,
+        showOutputCard: false,
+        showGraph: false,
+        moveLeft: false
+        
+    })
 
     bisection(xl, xr) {
         var increaseFunction = false;
@@ -101,9 +105,24 @@ class Bisection extends Component {
         this.createTable(data['xl'], data['xr'], data['x'], data['error']);
         this.setState({
             showOutputCard: true,
-            showGraph: true
+            showGraph: true,
+
         })
 
+
+    }
+
+    async handleAPI() {
+    
+        const response = await getXL_XR_from_API();
+        this.setState({
+            fx: response[0].fx,
+            xl: response[0].xl,
+            xr: response[0].xr
+        })
+        const { fx, xl, xr } = this.state;
+
+        this.bisection(parseFloat(xl), parseFloat(xr));
 
     }
 
@@ -142,10 +161,20 @@ class Bisection extends Component {
                             <h2 style={{color:"white"}}>f(x)</h2><Input size="large" name="fx" style={InputStyle}></Input>
                             <h2 style={{color:"white"}}>X<sub>L</sub></h2><Input size="large" name="xl" style={InputStyle}></Input>
                             <h2 style={{color:"white"}}>X<sub>R</sub></h2><Input size="large" name="xr" style={InputStyle}></Input><br /><br />
-                            <Button id="submit_button" onClick={
-                                () => this.bisection(parseFloat(xl), parseFloat(xr))
-                            }
-                                style={{ background: "#4caf50", color: "white" }}>Submit</Button>
+                            <div className="row">
+                                <div className="col-3">
+                                    <Button id="submit_button" onClick={
+                                    () => this.bisection(parseFloat(xl), parseFloat(xr))
+                                }
+                                    style={{ background: "#4caf50", color: "white" }}>Submit</Button>
+                                </div>
+                                <div className="col">
+                                    <Button id="submit_button_api" onClick={() => this.handleAPI()}
+                                    style={{ background: "blue", color: "white" }}>Calculate from data that get from API</Button>
+                                </div>
+                            </div>
+
+
 
                         </Card>
                     </div>

@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
-import { Card, Input, Button, Table } from 'antd';
-import { det, add, subtract, multiply, transpose } from 'mathjs';
-import '../../screen.css';
+import { Button, Card, Input, Table } from 'antd';
 import 'antd/dist/antd.css';
+import { add, det, multiply, subtract, transpose } from 'mathjs';
+import React, { Component } from 'react';
+import '../../screen.css';
 const InputStyle = {
     background: "#1890ff",
     color: "white",
@@ -104,7 +104,8 @@ class Gradient extends Component {
             console.log(D)
         } while (epsilon > 0.000001);
         output = x
-        this.setState({
+ 
+        this.setState({  
             showOutputCard: true
         });
 
