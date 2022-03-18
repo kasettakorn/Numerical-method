@@ -161,7 +161,6 @@ class App extends Component {
           <Footer style={{ backgroundColor: "#001529", minHeight: 120 }}>
             <p style={{ fontSize: "24px", fontWeight: "bold", color: "white" }}>
               © All Right Reserved<br />
-              <p style={{fontSize:"22px", verticalAlign:"text-bottom"}}><FacebookFilled style={{ fontSize: "30px" }} /><a target="_blank" rel="noopener noreferrer" href="http://www.facebook.com/kornkung.h" style={{ color: "white", textDecoration: "none" }}> Ronnakorn   Hompoa</a></p>
 
               <p style={{fontSize:"22px", verticalAlign:"text-bottom"}}><BookFilled style={{ fontSize: "30px" }} /><a target="_blank" rel="noopener noreferrer" href="http://www.facebook.com/kornkung.h" style={{ color: "white", textDecoration: "none" }}> Department of Computer and Information Science - King Mongkut's University of Technology North Bangkok</a></p>
 
