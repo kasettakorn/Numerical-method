@@ -1,4 +1,4 @@
 {
-    "mongoURI": "mongodb+srv://kornkung:Korn8162079@clusterdb.ttkwc.mongodb.net/numerical?retryWrites=true&w=majority",
-    "jwtSecret": "Korn8162079"
+    "mongoURI": "mongodb+srv://kornkung:----@clusterdb.ttkwc.mongodb.net/numerical?retryWrites=true&w=majority",
+    "jwtSecret": "----"
 }
