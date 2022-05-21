@@ -61,7 +61,7 @@ class App extends Component {
             <Sider width={335} style={{ background: "#fff" }}>
               <Menu
                 mode="inline"
-                style={{ height: '80vh', borderRight: 0, backgroundColor: "#001529", overflowY: "scroll" }}
+                style={{ height: '100vh', borderRight: 0, backgroundColor: "#001529", overflowY: "scroll" }}
                 theme="dark"
               >
                 <SubMenu key="root_submenu" title={<span>Root of Equation</span>}>
